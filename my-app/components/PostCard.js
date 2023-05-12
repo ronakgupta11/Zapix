@@ -14,7 +14,7 @@ function PostCard(props) {
   
 
   return (
-    <div className='card w-1/2 border border-borderCol rounded-lg bg-primary-focus  items-center justify-center flex flex-col  m-64'>
+    <div className='card w-1/2 border border-borderCol rounded-lg bg-primary-focus  items-center justify-center flex flex-col  m-auto mb-4'>
         {/* user info */}
         <div class="flex items-center space-x-4 w-full rounded-tl-lg rounded-tr-lg h-16 p-4 bg-secondary">
         <Avatar image = {props.image}/>
@@ -26,9 +26,9 @@ function PostCard(props) {
          {/* post info */}
         <div className='post-info w-full p-4'>
             <div className='post-text m-2 text-textCol italic'>
-                this is a test post card
+                {props.textContent}
             </div>
-            <Link href={"/"}><img className="m-2 rounded-lg " src='favicon.ico'></img></Link>
+            <Link href={"/"}><img className="m-2 rounded-lg " src={props.image}></img></Link>
             
         </div>
         {/* post interaction buttton */}
