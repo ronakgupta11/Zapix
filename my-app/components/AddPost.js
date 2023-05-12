@@ -94,10 +94,10 @@ function AddPost() {
 {uploadLink && (
                   <a
                     className="text-sm mt-4 -rotate-2"
-                    href={uploadLink}
+                    href={`${uploadLink}/${file?.name}`}
                     target="__blank"
                   >
-                    {uploadLink}
+                    {`${uploadLink}/${file?.name}`}
                   </a>
                 )}
                 <p>
