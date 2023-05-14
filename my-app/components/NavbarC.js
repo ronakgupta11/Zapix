@@ -77,12 +77,12 @@ function NavbarC() {
     <Navbar.Link href="/Chat">
       Chat
     </Navbar.Link>
-    <Navbar.Link href="/navbars">
+    <Navbar.Link href="/Profile">
       Profile
     </Navbar.Link>
-    <Navbar.Link href="/navbars">
+    {/* <Navbar.Link href="/navbars">
       Contact
-    </Navbar.Link>
+    </Navbar.Link> */}
   </Navbar.Collapse>
 </Navbar>
   )
