@@ -6,6 +6,7 @@ import AddPost from '@/components/AddPost'
 import PostCard from '@/components/PostCard'
 import PostPage from '@/components/PostPage'
 import Footer from '@/components/Footer'
+import Toast from '@/components/Toast'
 // import styles from '@/styles/Home.module.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -23,6 +24,7 @@ export default function Home() {
           <Navbar/>
         
           <AddPost/>
+          <Toast/>
           {/* <PostCard/> */}
           {/* <PostPage/> */}
           <Footer/>
