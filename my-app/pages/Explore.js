@@ -2,8 +2,9 @@ import React, { useState,useEffect } from 'react'
 import { Polybase } from "@polybase/client";
 import PostCard from '@/components/PostCard';
 import Head from 'next/head';
-import Navbar from '@/components/Navbar';
+
 import Footer from '@/components/Footer';
+import NavbarC from '@/components/NavbarC';
 const db = new Polybase({
   defaultNamespace: "pk/0xf50ea4b6ca184c2a54567099bab8960e4057f80161262704102502bacb76b8029902b6bab1a9dcac5701c816db1834ec27760b2ddc6b9efaedcb3fc0906b4aea/social-web-app",
 });
@@ -46,8 +47,10 @@ function Explore() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className='pt-24 bg-primary min-h-screen'>
-          <Navbar/>
+      <main className='bg-white dark:bg-primary min-h-screen'>
+          {/* <NavbarC/>
+           */}
+           <NavbarC/>
         
 
           {posts}

@@ -1,18 +1,16 @@
 import React from 'react'
-import Avatar from './Avatar'
+import Avatar from './AvatarC'
 import Link from 'next/link'
+import {IoIosHeartEmpty,IoIosHeart} from "react-icons/io"
+import {BsChat} from "react-icons/bs"
 
 function PostPage(props) {
     const liked = false
-    const likeIcon = liked?<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2563eb" className="w-6 h-6">
-    <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-  </svg>:<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#ffffff" className="w-6 h-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-</svg>
+    const likeIcon = liked?<IoIosHeart className='h-5 w-5'/>:<IoIosHeartEmpty className='h-5 w-5'/>
   return (
     <div >
         <section className='w-1/2 p-12 m-auto'>
-        <div class="flex items-center space-x-4 w-full  h-16 p-4">
+        <div class="flex items-center space-x-4 w-full border-b dark:border-gray-600  h-16 p-4">
         <Avatar image = {props.image}/>
         <div class="font-medium dark:text-white">
             <div>Ronak Gupta</div>
@@ -20,26 +18,24 @@ function PostPage(props) {
         </div>
         </div>
          {/* post info */}
-        <div className='post-info w-full p-4'>
+        <div className='post-info w-full p-4 border-b dark:border-gray-600 mb-2'>
             <div className='post-text m-2 text-white text-lg italic'>
                 this is a test post card
             </div>
             <Link href={"/"}><img className="m-2 rounded-lg " src='favicon.ico'></img></Link>
             
         </div>
-        <div className='post-interaction flex w-full items-center justify-between m-2'>
+        <div className='post-interaction flex w-full items-center justify-between p-2'>
             <div className=' flex items-center'>
                 {likeIcon}
-                <div className='interacion-text ml-2 text-white'>
+                <div className='interacion-text ml-2 dark:text-white text-gray-500'>
                     12 likes
                 </div>                
             </div>
             <div className=' flex items-center'>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#ffffff" className="w-6 h-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" />
-</svg>
+<BsChat className='h-5 w-5'/>
 
-                <div className='interacion-text ml-2 text-white'>
+                <div className='interacion-text ml-2 dark:text-white text-gray-500'>
                     0 comments
                 </div>                
             </div>

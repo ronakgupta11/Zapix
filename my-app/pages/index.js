@@ -1,12 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
-import Navbar from '@/components/Navbar'
+import NavbarC from '@/components/NavbarC'
 import AddPost from '@/components/AddPost'
 import PostCard from '@/components/PostCard'
 import PostPage from '@/components/PostPage'
 import Footer from '@/components/Footer'
-import Toast from '@/components/Toast'
+import ToastC from '@/components/ToastC'
 // import styles from '@/styles/Home.module.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -20,13 +20,14 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className='pt-24 bg-primary min-h-screen '>
-          <Navbar/>
+      <main className=' bg-white dark:bg-primary min-h-screen '>
+          <NavbarC/>
         
-          <AddPost/>
-          <Toast/>
+          {/* <AddPost/> */}
+          {/* <ToastC/> */}
+          {/* <ToastC/> */}
           {/* <PostCard/> */}
-          {/* <PostPage/> */}
+          <PostPage/>
           <Footer/>
         
       </main>
