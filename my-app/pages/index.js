@@ -23,11 +23,11 @@ export default function Home() {
       <main className=' bg-white dark:bg-primary min-h-screen '>
           <NavbarC/>
         
-          {/* <AddPost/> */}
+          <AddPost/>
           {/* <ToastC/> */}
           {/* <ToastC/> */}
           {/* <PostCard/> */}
-          <PostPage/>
+          {/* <PostPage/> */}
           <Footer/>
         
       </main>

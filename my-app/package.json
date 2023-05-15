@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@lighthouse-web3/sdk": "^0.2.3",
     "@next/font": "13.4.2",
     "@polybase/client": "^0.5.0",
     "@spheron/browser-upload": "^1.0.1",
     "@spheron/storage": "^1.0.14",
     "daisyui": "^2.51.6",
+    "ethers": "^5.7.2",
     "flowbite": "^1.6.5",
     "flowbite-react": "^0.4.4",
     "next": "13.4.2",

@@ -44,7 +44,7 @@ function NavbarC() {
   rounded={true}
   className='border-b dark:border-gray-600'
 >
-  <Navbar.Brand href="https://flowbite.com/">
+  <Navbar.Brand href="/">
     <img
       src="https://flowbite.com/docs/images/logo.svg"
       className="mr-3 h-6 sm:h-9"
