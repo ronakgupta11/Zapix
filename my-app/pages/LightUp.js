@@ -38,7 +38,7 @@ function LightUp() {
     const sig = await encryptionSignature();
     const response = await lighthouse.uploadEncrypted(
       e,
-      "YOUR_API_KEY",
+      "be74ef67.6a825190433a450a872e651c54303d6f",
       sig.publicKey,
       sig.signedMessage,
       progressCallback
@@ -56,7 +56,7 @@ function LightUp() {
   }
 
   const shareFile = async() =>{
-    const cid = "QmVkbVeTGA7RHgvdt31H3ax1gW3pLi9JfW6i9hDdxTmcGK";
+    const cid = "QmSYRjGMpcWXURuDNhzsomYMRaU1YxpFUbAhmAFwYLG43D";
 
     // Then get auth message and sign
     // Note: the owner of the file should sign the message.
