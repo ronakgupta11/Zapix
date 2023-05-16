@@ -17,6 +17,7 @@ module.exports = {
         "textCol":"#8f938e",
         "buttonCol":"#2563eb"
       }
+
     },
   },
   plugins: [require("daisyui"),require('flowbite/plugin')],
@@ -30,5 +31,6 @@ module.exports = {
     prefix: "",
     darkTheme: "dark",
   },
+  darkMode: 'class',
 }
 

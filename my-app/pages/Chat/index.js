@@ -17,7 +17,7 @@ function Chat() {
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <main className='bg-white dark:bg-primary min-h-screen'>
-      <NavbarC/>
+      {/* <NavbarC/> */}
     <div className='w-1/2 m-auto'>
 
     <ListGroup className=''>
@@ -28,7 +28,7 @@ function Chat() {
         <ChatInput/>
     </ListGroup>
     </div>
-    <Footer/>
+    {/* <Footer/> */}
     </main>
     </>
       )

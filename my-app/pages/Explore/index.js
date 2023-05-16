@@ -50,12 +50,12 @@ function Explore() {
       <main className='bg-white dark:bg-primary min-h-screen'>
           {/* <NavbarC/>
            */}
-           <NavbarC/>
+
         
 
           {posts}
         
-          <Footer/>
+
         
       </main>
 
