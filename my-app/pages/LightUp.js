@@ -3,7 +3,7 @@ import { ethers } from 'ethers';
 import lighthouse from '@lighthouse-web3/sdk';
 
 function LightUp() {
-
+  const [fileURL, setFileURL] = React.useState(null);
 
     const encryptionSignature = async() =>{
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -62,7 +62,7 @@ function LightUp() {
     // Note: the owner of the file should sign the message.
     const {publicKey, signedMessage} = await signAuthMessage();
 
-    const publicKeyUserB = ["0x201Bcc3217E5AA8e803B41d1F5B6695fFEbD5CeD"];
+    const publicKeyUserB = ["0x086d32e199ef65Bce6a3bE28D103aaf5fc798A51"];
     
     const res = await lighthouse.shareFile(
       publicKey,
@@ -97,6 +97,46 @@ function LightUp() {
   }
 
 
+    /* Decrypt file */
+    const decrypt = async() =>{
+      // Fetch file encryption key
+      const cid = "QmU8UYKDJvxTi4qjwpzAZyvxPZt1EqM1C7RpQvR56GAgbb"; //replace with your IPFS CID
+      const {publicKey, signedMessage} = await encryptionSignature();
+      /*
+        fetchEncryptionKey(cid, publicKey, signedMessage)
+          Parameters:
+            CID: CID of the file to decrypt
+            publicKey: public key of the user who has access to file or owner
+            signedMessage: message signed by the owner of publicKey
+      */
+      const keyObject = await lighthouse.fetchEncryptionKey(
+        cid,
+        publicKey,
+        signedMessage
+      );
+  
+      // Decrypt file
+      /*
+        decryptFile(cid, key, mimeType)
+          Parameters:
+            CID: CID of the file to decrypt
+            key: the key to decrypt the file
+            mimeType: default null, mime type of file
+      */
+     
+      const fileType = "image/jpeg";
+      const decrypted = await lighthouse.decryptFile(cid, keyObject.data.key, fileType);
+      console.log(decrypted)
+      /*
+        Response: blob
+      */
+  
+      // View File
+      const url = URL.createObjectURL(decrypted);
+      console.log(url);
+      setFileURL(url);
+    }
+
 
   
 
@@ -104,6 +144,13 @@ function LightUp() {
     <div className="App">
       <input onChange={e=>uploadFileEncrypted(e)} type="file" />
       <button onClick={()=>shareFile()}>share file</button>
+      <button onClick={()=>decrypt()}>decrypt</button>
+      {
+        fileURL?
+          <a href={fileURL} target="_blank">viewFile</a>
+        :
+          null
+      }
     </div>
   );
 }
