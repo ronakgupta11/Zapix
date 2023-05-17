@@ -8,20 +8,20 @@ function LightUp() {
   const {currentPKP,signMessage} = useContext(AuthContext)
   const [fileURL, setFileURL] = React.useState(null);
 
-    const encryptionSignature = async() =>{
-        // const provider = new ethers.providers.Web3Provider(window.ethereum);
-        // const signer = provider.getSigner();
-        // const address = await signer.getAddress();
-        const address = currentPKP?.ethAddress
-        const messageRequested = (await lighthouse.getAuthMessage(address)).data.message;
-        // const signedMessage = await signer.signMessage(messageRequested);
-        const signedMessage = await signMessage(messageRequested);
-        console.log(signedMessage)
-        return({
-          signedMessage: signedMessage,
-          publicKey: address
-        });
-      }
+    // const encryptionSignature = async() =>{
+    //     // const provider = new ethers.providers.Web3Provider(window.ethereum);
+    //     // const signer = provider.getSigner();
+    //     // const address = await signer.getAddress();
+    //     const address = currentPKP?.ethAddress
+    //     const messageRequested = (await lighthouse.getAuthMessage(address)).data.message;
+    //     // const signedMessage = await signer.signMessage(messageRequested);
+    //     const signedMessage = await signMessage(messageRequested);
+    //     console.log(signedMessage)
+    //     return({
+    //       signedMessage: signedMessage,
+    //       publicKey: address
+    //     });
+    //   }
 
 
       const progressCallback = (progressData) => {
@@ -45,7 +45,8 @@ function LightUp() {
 
 
   try{
-    const sig = await encryptionSignature();
+    // const sig = await encryptionSignature();
+    const sig = await signAuthMessage();
     const response = await lighthouse.uploadEncrypted(
       e,
       "be74ef67.6a825190433a450a872e651c54303d6f",
@@ -113,8 +114,8 @@ function LightUp() {
     /* Decrypt file */
     const decrypt = async() =>{
       // Fetch file encryption key
-      const cid = "QmU8UYKDJvxTi4qjwpzAZyvxPZt1EqM1C7RpQvR56GAgbb"; //replace with your IPFS CID
-      const {publicKey, signedMessage} = await encryptionSignature();
+      const cid = "Qma9LnKhbw2nXfvMFDpibzRu8mHfnLhJ5QJaS1phnBg7Vb"; //replace with your IPFS CID
+      const {publicKey, signedMessage} = await signAuthMessage();
       /*
         fetchEncryptionKey(cid, publicKey, signedMessage)
           Parameters:
