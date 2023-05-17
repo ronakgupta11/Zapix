@@ -1,9 +1,9 @@
 import '@/styles/globals.css'
 import NavbarC from '@/components/NavbarC'
 import Head from 'next/head'
-import { SessionProvider } from "next-auth/react"
+import { AuthProvider } from '@/context/AuthProvider'
 
-export default function App({ Component,  pageProps: { session, ...pageProps }, }) {
+export default function App({ Component,  pageProps }) {
   return(
     <>
     <Head>
@@ -11,7 +11,7 @@ export default function App({ Component,  pageProps: { session, ...pageProps }, 
     </Head>
 
     {/* <ContextProvider> */}
-    <SessionProvider session={session}>
+    <AuthProvider>
       <div>
         {/* <Notifications /> */}
         <NavbarC/>
@@ -19,7 +19,7 @@ export default function App({ Component,  pageProps: { session, ...pageProps }, 
           <Component {...pageProps} />
           
       </div>
-      </SessionProvider>
+      </AuthProvider>
     {/* </ContextProvider> */}
   </>
   )

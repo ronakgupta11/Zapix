@@ -1,6 +1,9 @@
 import React from 'react'
 import { Navbar,Button ,DarkThemeToggle, Flowbite} from 'flowbite-react'
+import { AuthContext } from '@/context/AuthProvider'
+import { useContext } from 'react'
 function NavbarC(props) {
+  const {login,logout} = useContext(AuthContext)
   return (
 
 
@@ -24,7 +27,7 @@ function NavbarC(props) {
     </span>
   </Navbar.Brand>
   <div className="flex md:order-2">
-    <Button className='mr-2'>
+    <Button className='mr-2' onClick={login}>
       Get started
     </Button>
     <Flowbite>

@@ -13,7 +13,7 @@ import {
   pollRequestUntilTerminalState,
 } from '@/utils/relay';
 import { useRouter } from 'next/router';
-const REDIRECT_URI = "http://localhost:3000/Lit"
+const REDIRECT_URI = "http://localhost:3000/"
 
 const Lit = ()=>{
 
