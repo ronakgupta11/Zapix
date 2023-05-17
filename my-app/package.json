@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@lighthouse-web3/sdk": "^0.2.3",
+    "@lit-protocol/lit-node-client": "^2.1.161",
     "@next/font": "13.4.2",
     "@polybase/client": "^0.5.0",
     "@spheron/browser-upload": "^1.0.1",
@@ -18,7 +19,9 @@
     "ethers": "^5.7.2",
     "flowbite": "^1.6.5",
     "flowbite-react": "^0.4.4",
+    "nanoid": "^4.0.2",
     "next": "13.4.2",
+    "next-auth": "^4.22.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0"
