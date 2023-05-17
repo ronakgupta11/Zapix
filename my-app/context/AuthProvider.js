@@ -27,11 +27,14 @@ export const AuthProvider=({children})=>{
 
     const [googleIdToken, setGoogleIdToken] = useState();
     const [pkps, setPKPs] = useState([]);
-    const [litNodeClient, setLitNodeClient] = useState();
+    const [litNodeClient, setLitNodeClient] = useState(null);
     const [currentPKP, setCurrentPKP] = useState();
-    const [sessionSigs, setSessionSigs] = useState();
+    const [sessionSigs, setSessionSigs] = useState(null);
     const [message, setMessage] = useState('Free the web!');
     const [signature, setSignature] = useState(null);
+    const[loginInProcess,setLoginInProcess] = useState(false);
+
+
 
 
     useEffect(() => {
@@ -50,21 +53,24 @@ export const AuthProvider=({children})=>{
             await litNodeClient.connect();
     
             // Set LitNodeClient
+            console.log(litNodeClient)
             setLitNodeClient(litNodeClient);
           } catch (err) {
-            setError(err);
+            // setError(err);
+            console.log(err)
             // setView(Views.ERROR);
           }
         }
     
         if (!litNodeClient) {
-          initLitNodeClient();
+           initLitNodeClient();
         }
       }, [litNodeClient]);
 
       const handleRedirect = useCallback(async () => {
         // setView(Views.HANDLE_REDIRECT);
         try {
+          setLoginInProcess(true)
           // Get Google ID token from redirect callback
           const googleIdToken = handleSignInRedirect(REDIRECT_URI);
           setGoogleIdToken(googleIdToken);
@@ -73,21 +79,25 @@ export const AuthProvider=({children})=>{
         //   setView(Views.FETCHING);
           const pkps = await fetchGooglePKPs(googleIdToken);
           if (pkps.length > 0) {
-            setPKPs(pkps);
             await createSession(pkps[0])
+            setPKPs(pkps);
           }
           else{
             await mint()
           }
         //   setView(Views.FETCHED);
+
         } catch (err) {
           console.log(err)
+  
         //   setView(Views.ERROR);
         }
     
         // Clear url params once we have the Google ID token
         // Be sure to use the redirect uri route
-        router.replace('/Lit', undefined, { shallow: true });
+        router.replace('/LightUp', undefined, { shallow: true });
+         setTimeout(()=>setLoginInProcess(false),3000)
+        
       }, [router]);
     
     
@@ -179,9 +189,16 @@ function signInWithGoogle() {
     
         try {
           // Connect to LitNodeClient if not already connected
-          if (!litNodeClient.ready) {
+          // if (!litNodeClient.ready) {
+            const litNodeClient = new LitNodeClient({
+              litNetwork: 'serrano',
+              debug: false,
+            });
+    
+            // Connect to Lit nodes
             await litNodeClient.connect();
-          }
+            // await litNodeClient.connect();
+          // }
     
           const authNeededCallback = async authCallbackParams => {
             let chainId = 1;
@@ -220,10 +237,62 @@ function signInWithGoogle() {
     
         //   setView(Views.SESSION_CREATED);
         } catch (err) {
-          setError(err);
+          // setError(err);
+          console.log(err)
         //   setView(Views.ERROR);
         }
       }
+
+
+       /**
+   * Sign a message with current PKP
+   */
+  async function signMessage(message) {
+    try {
+      const toSign = ethers.utils.arrayify(ethers.utils.hashMessage(message));
+      const litActionCode = `
+        const go = async () => {
+          // this requests a signature share from the Lit Node
+          // the signature share will be automatically returned in the response from the node
+          // and combined into a full signature by the LitJsSdk for you to use on the client
+          // all the params (toSign, publicKey, sigName) are passed in from the LitJsSdk.executeJs() function
+          const sigShare = await LitActions.signEcdsa({ toSign, publicKey, sigName });
+        };
+        go();
+      `;
+      // Sign message
+      const results = await litNodeClient.executeJs({
+        code: litActionCode,
+        sessionSigs,
+        jsParams: {
+          toSign: toSign,
+          publicKey: currentPKP.publicKey,
+          sigName: 'sig1',
+        },
+      });
+      // Get signature
+      const result = results.signatures['sig1'];
+      const signature = ethers.utils.joinSignature({
+        r: '0x' + result.r,
+        s: '0x' + result.s,
+        v: result.recid,
+      });
+      
+      // setSignature(signature);
+      return(signature)
+
+      // // Get the address associated with the signature created by signing the message
+      // const recoveredAddr = ethers.utils.verifyMessage(message, signature);
+      // setRecoveredAddress(recoveredAddr);
+      // // Check if the address associated with the signature is the same as the current PKP
+      // const verified =
+      //   currentPKP.ethAddress.toLowerCase() === recoveredAddr.toLowerCase();
+      // setVerified(verified);
+    } catch (err) {
+      console.log(err);
+    //   setView(Views.ERROR);
+    }
+  }
 
 
   /**
@@ -246,7 +315,8 @@ function signInWithGoogle() {
       // Get session sigs for new PKP
       await createSession(newPKP);
     } catch (err) {
-      setError(err);
+      // setError(err);
+      console.log(err)
     //   setView(Views.ERROR);
     }
   }
@@ -258,23 +328,27 @@ function signInWithGoogle() {
     return (
         <AuthContext.Provider
         value={{
-            message,
-            setMessage,
+
             googleIdToken,
             currentPKP,
-            signature,
-            setSignature,
+            // signature,
+            // setSignature,
             litNodeClient,
             sessionSigs,
-
+            loginInProcess,
+            signMessage,
 
 
             login: async()=>{
                 try{
+                  setLoginInProcess(true)
                     signInWithGoogle()
+                    // await initLitNodeClient()
+                    setLoginInProcess(false)
                     
 
                 }catch(e){
+                  setLoginInProcess(false)
                     console.log(e)
                 }
 
@@ -288,6 +362,7 @@ function signInWithGoogle() {
                     setCurrentPKP(null)
                     setPKPs([])
                     setGoogleIdToken(null)
+                    // setLitNodeClient()
                 }catch(e){
                     console.log(e)
                 }

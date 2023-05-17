@@ -2,8 +2,9 @@ import React from 'react'
 import { Navbar,Button ,DarkThemeToggle, Flowbite} from 'flowbite-react'
 import { AuthContext } from '@/context/AuthProvider'
 import { useContext } from 'react'
+import SpinnerBtn from './SpinnerBtn'
 function NavbarC(props) {
-  const {login,logout} = useContext(AuthContext)
+  const {login,logout,sessionSigs,loginInProcess,currentPKP,litNodeClient} = useContext(AuthContext)
   return (
 
 
@@ -27,9 +28,11 @@ function NavbarC(props) {
     </span>
   </Navbar.Brand>
   <div className="flex md:order-2">
-    <Button className='mr-2' onClick={login}>
+    {!sessionSigs && !loginInProcess && <Button className='mr-2' onClick={login}>
       Get started
-    </Button>
+    </Button>}
+    {!sessionSigs && loginInProcess &&<SpinnerBtn/>}
+    {sessionSigs && <Button onClick={logout}>logout</Button> }
     <Flowbite>
 
     <DarkThemeToggle />
@@ -58,6 +61,8 @@ function NavbarC(props) {
   </Navbar.Collapse>
 </Navbar>
 <div>
+  {console.log(currentPKP?.publicKey)}
+  {console.log("lit:",litNodeClient)}
   {props.children}
 </div>
 

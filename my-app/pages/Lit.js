@@ -119,7 +119,7 @@ const Lit = ()=>{
   /**
    * Sign a message with current PKP
    */
-  async function signMessage() {
+  async function signMessage(message) {
     try {
       const toSign = ethers.utils.arrayify(ethers.utils.hashMessage(message));
       const litActionCode = `

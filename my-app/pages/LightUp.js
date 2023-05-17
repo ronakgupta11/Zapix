@@ -1,16 +1,22 @@
 import React from 'react'
 import { ethers } from 'ethers';
 import lighthouse from '@lighthouse-web3/sdk';
+import { useContext } from 'react';
+import { AuthContext } from '@/context/AuthProvider';
 
 function LightUp() {
+  const {currentPKP,signMessage} = useContext(AuthContext)
   const [fileURL, setFileURL] = React.useState(null);
 
     const encryptionSignature = async() =>{
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
-        const address = await signer.getAddress();
+        // const provider = new ethers.providers.Web3Provider(window.ethereum);
+        // const signer = provider.getSigner();
+        // const address = await signer.getAddress();
+        const address = currentPKP?.ethAddress
         const messageRequested = (await lighthouse.getAuthMessage(address)).data.message;
-        const signedMessage = await signer.signMessage(messageRequested);
+        // const signedMessage = await signer.signMessage(messageRequested);
+        const signedMessage = await signMessage(messageRequested);
+        console.log(signedMessage)
         return({
           signedMessage: signedMessage,
           publicKey: address
@@ -34,7 +40,11 @@ function LightUp() {
        - publicKey: wallets public key
        - signedMessage: message signed by the owner of publicKey
        - uploadProgressCallback: function to get progress (optional)
+       
     */
+
+
+  try{
     const sig = await encryptionSignature();
     const response = await lighthouse.uploadEncrypted(
       e,
@@ -44,6 +54,9 @@ function LightUp() {
       progressCallback
     );
     console.log(response);
+  }catch(err){
+    console.log(err)
+  }
     /*
       output:
         data: {
@@ -56,7 +69,7 @@ function LightUp() {
   }
 
   const shareFile = async() =>{
-    const cid = "QmSYRjGMpcWXURuDNhzsomYMRaU1YxpFUbAhmAFwYLG43D";
+    const cid = "Qma9LnKhbw2nXfvMFDpibzRu8mHfnLhJ5QJaS1phnBg7Vb";
 
     // Then get auth message and sign
     // Note: the owner of the file should sign the message.
@@ -86,11 +99,11 @@ function LightUp() {
   }
 
   const signAuthMessage = async() =>{
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const publicKey = (await signer.getAddress()).toLowerCase();
+    // const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // const signer = provider.getSigner();
+    const publicKey = currentPKP?.ethAddress.toLowerCase();
     const messageRequested = (await lighthouse.getAuthMessage(publicKey)).data.message;
-    const signedMessage = await signer.signMessage(
+    const signedMessage = await signMessage(
       messageRequested
     );
     return({publicKey: publicKey, signedMessage: signedMessage});
