@@ -3,9 +3,10 @@ import { ethers } from 'ethers';
 import lighthouse from '@lighthouse-web3/sdk';
 import { useContext } from 'react';
 import { AuthContext } from '@/context/AuthProvider';
+import { Button } from 'flowbite-react';
 
 function LightUp() {
-  const {currentPKP,signMessage} = useContext(AuthContext)
+  const {currentPKP,signMessage,createUser,updateRecord} = useContext(AuthContext)
   const [fileURL, setFileURL] = React.useState(null);
 
     // const encryptionSignature = async() =>{
@@ -159,6 +160,8 @@ function LightUp() {
       <input onChange={e=>uploadFileEncrypted(e)} type="file" />
       <button onClick={()=>shareFile()}>share file</button>
       <button onClick={()=>decrypt()}>decrypt</button>
+      <Button onClick={()=>createUser(currentPKP?.publicKey)}>create User</Button>
+      <Button onClick={()=>updateRecord(currentPKP?.publicKey)}>create User</Button>
       {
         fileURL?
           <a href={fileURL} target="_blank">viewFile</a>
