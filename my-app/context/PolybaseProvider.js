@@ -68,6 +68,36 @@ async function setImage (publicKey,image) {
     return recordData;
 }
 
+async function addFriend(publicKey,friendPK){
+  db.signer(async(data)=>{
+    const signature = await signMessage(data)
+    return {h:"eth-personal-sign",sig:signature}
+  })
+  const recordData = await userCollectionReference
+    .record(publicKey)
+    .call("addFriend", [await userCollectionReference.record(friendPK).get()]);
+    return recordData;
+
+}
+
+async function createPost(id,PostContent,PostImageUrl,owner,timeStamp){
+  const recordData = await postCollectionReference.create([id,PostContent,PostImageUrl,owner,timeStamp])
+return recordData;
+}
+
+async function addPost(publicKey,id,PostContent,PostImageUrl,owner,timeStamp){
+  const res = await createPost(id,PostContent,PostImageUrl,owner,timeStamp);
+  const postId = res.data.id;
+  const user = await userCollectionReference.record(publicKey).get()
+  db.signer(async(data)=>{
+    const signature = await signMessage(data)
+    return {h:"eth-personal-sign",sig:signature}
+  })
+  const response = await userCollectionReference.record(publicKey).call("addPost",[await postCollectionReference.record(postId).get()])
+  return response
+}
+
+
   return(
     <PolybaseContext.Provider
     value={{
