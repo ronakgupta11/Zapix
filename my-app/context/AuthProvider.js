@@ -2,7 +2,7 @@ import React,{useState,createContext,useCallback,useEffect} from "react";
 import { LitNodeClient } from '@lit-protocol/lit-node-client';
 import { ethers } from 'ethers';
 import { Polybase } from "@polybase/client";
-import { ethPersonalSign } from '@polybase/eth'
+
 
 
 
@@ -32,7 +32,7 @@ export const AuthProvider=({children})=>{
     const [litNodeClient, setLitNodeClient] = useState(null);
     const [currentPKP, setCurrentPKP] = useState();
     const [sessionSigs, setSessionSigs] = useState(null);
-    const [message, setMessage] = useState('Free the web!');
+
     const [signature, setSignature] = useState(null);
     const[loginInProcess,setLoginInProcess] = useState(false);
     const db = new Polybase({
@@ -269,16 +269,9 @@ function signInWithGoogle() {
             authNeededCallback,
           });
 
-
-          // if(!checkUser(pkp.publicKey)){
-          //   console.log("in if statement")
-          //   await collectionReference.create([pkp.publicKey])
-          // }
-          // await createUser(pkp.publicKey)
           setCurrentPKP(pkp);
           setSessionSigs(sessionSigs);
-    
-        //   setView(Views.SESSION_CREATED);
+
         } catch (err) {
           // setError(err);
           console.log(err)
@@ -324,13 +317,7 @@ function signInWithGoogle() {
       // setSignature(signature);
       return(signature)
 
-      // // Get the address associated with the signature created by signing the message
-      // const recoveredAddr = ethers.utils.verifyMessage(message, signature);
-      // setRecoveredAddress(recoveredAddr);
-      // // Check if the address associated with the signature is the same as the current PKP
-      // const verified =
-      //   currentPKP.ethAddress.toLowerCase() === recoveredAddr.toLowerCase();
-      // setVerified(verified);
+
     } catch (err) {
       console.log(err);
     //   setView(Views.ERROR);
@@ -374,14 +361,11 @@ function signInWithGoogle() {
 
             googleIdToken,
             currentPKP,
-            // signature,
-            // setSignature,
-            litNodeClient,
             sessionSigs,
             loginInProcess,
             signMessage,
             createUser,
-            updateRecord,
+            // updateRecord,
 
             login: async()=>{
                 try{
@@ -399,14 +383,11 @@ function signInWithGoogle() {
             },
             logout:async()=>{
                 try{
-                    // await GoogleSignin.revokeAccess();
-                    // await GoogleSignin.signOut();
-                    // await auth().signOut()
+
                     setSessionSigs(null)
                     setCurrentPKP(null)
                     setPKPs([])
                     setGoogleIdToken(null)
-                    // setLitNodeClient()
                 }catch(e){
                     console.log(e)
                 }
