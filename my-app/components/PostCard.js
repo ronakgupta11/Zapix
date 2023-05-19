@@ -31,7 +31,7 @@ function PostCard(props) {
         <div class="flex items-center space-x-4 w-full rounded-tl-lg rounded-tr-lg h-16 p-4 bg-light-secondary dark:bg-secondary border-b dark:border-gray-600">
         <AvatarC image = {postBy?.imageUrl}/>
         <div class="font-medium dark:text-white">
-            <div className='text-black dark:text-white'>{postBy?.name}</div>
+            <Link href={`profile/${postBy?.id}`}><div className='text-black dark:text-white'>{postBy?.name}</div></Link>
             <div class="text-sm text-gray-500 dark:text-gray-400">{props.timeStamp}</div>
         </div>
         </div>

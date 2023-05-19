@@ -4,7 +4,7 @@ import { Inter } from '@next/font/google'
 import NavbarC from '@/components/NavbarC'
 import AddPost from '@/components/AddPost'
 import PostCard from '@/components/PostCard'
-import PostPage from '@/components/PostPage'
+
 import Footer from '@/components/Footer'
 import ToastC from '@/components/ToastC'
 import Link from 'next/link'
