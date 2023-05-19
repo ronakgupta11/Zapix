@@ -2,6 +2,7 @@ import React from 'react'
 import { Navbar,Button ,DarkThemeToggle, Flowbite} from 'flowbite-react'
 import { AuthContext } from '@/context/AuthProvider'
 import { useContext } from 'react'
+import Link from 'next/link'
 import SpinnerBtn from './SpinnerBtn'
 function NavbarC(props) {
   const {login,logout,loginInProcess,currentPKP,isAuthenticated} = useContext(AuthContext)
@@ -42,21 +43,18 @@ function NavbarC(props) {
     <Navbar.Toggle />
   </div>
 { isAuthenticated() && <Navbar.Collapse>
-    <Navbar.Link
-      href="/"
-      active={true}
-    >
-      Home
-    </Navbar.Link>
-    <Navbar.Link href="/Explore">
-      Explore
-    </Navbar.Link>
-    <Navbar.Link href="/Chat">
+    <Link href="/">
       Chat
-    </Navbar.Link>
-    <Navbar.Link href="/Profile">
-      Profile
-    </Navbar.Link>
+    </Link>
+    <Link href="/dashboard">
+      Chat
+    </Link>
+    <Link href="/Profile">
+      Chat
+    </Link>
+    <Link href="/Chat">
+      Chat
+    </Link>
   </Navbar.Collapse>}
 </Navbar>
 <div>

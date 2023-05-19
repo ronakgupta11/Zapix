@@ -1,38 +1,46 @@
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AvatarC from './AvatarC'
 import Link from 'next/link'
 import {IoIosHeartEmpty,IoIosHeart} from "react-icons/io"
 import {BsChat} from "react-icons/bs"
+import { PolybaseContext } from '@/context/PolybaseProvider'
+import { useContext } from 'react'
 
 
 function PostCard(props) {
-    const liked = true
-//     const likeIcon = liked?<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2563eb" className="w-6 h-6">
-//     <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-//   </svg>:<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#ffffff" className="w-6 h-6">
-//   <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-// </svg>
-const likeIcon = liked?<IoIosHeart className='h-5 w-5'/>:<IoIosHeartEmpty className='h-5 w-5'/>
+
+    const {addLike,userCollectionReference} = useContext(PolybaseContext)
+    const liked = props.isLiked
+
+    const postByUserId = props.postBy.id
+    const [postBy,setPostBy] = useState() 
+    useEffect(()=>{
+        userCollectionReference.record(postByUserId).get().then((val)=>setPostBy(val.data))
+
+
+    },[props.postBy])
+    // console.log("postBy",postBy)
+    
+    const likeIcon = liked?<IoIosHeart className='h-5 w-5'/>:<IoIosHeartEmpty className='h-5 w-5'/>
 
   
-
   return (
     <div className='card w-1/2 border border-gray-200 dark:border-borderCol rounded-lg dark:bg-primary-focus  items-center justify-center flex flex-col  m-auto mb-4'>
         {/* user info */}
         <div class="flex items-center space-x-4 w-full rounded-tl-lg rounded-tr-lg h-16 p-4 bg-light-secondary dark:bg-secondary border-b dark:border-gray-600">
-        <AvatarC image = {props.image}/>
+        <AvatarC image = {postBy?.imageUrl}/>
         <div class="font-medium dark:text-white">
-            <div className='text-black dark:text-white'>Ronak Gupta</div>
-            <div class="text-sm text-gray-500 dark:text-gray-400">2 hours ago</div>
+            <div className='text-black dark:text-white'>{postBy?.name}</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400">{props.timeStamp}</div>
         </div>
         </div>
          {/* post info */}
         <div className='post-info w-full p-4'>
             <div className='post-text m-2 dark:text-textCol text-gray-500 italic'>
-                {props.textContent}
+                {props.content}
             </div>
-            <Link href={"/"}><img className="m-2 rounded-lg " src={props.image}></img></Link>
+            <Link href={`/posts/${props.id}`}><img className="m-2 rounded-lg " src={props.postImage}></img></Link>
             
         </div>
         {/* post interaction buttton */}
@@ -40,16 +48,19 @@ const likeIcon = liked?<IoIosHeart className='h-5 w-5'/>:<IoIosHeartEmpty classN
         <div className='flex flex-col items-center bg-light-secondary dark:bg-secondary w-full border-t dark:border-gray-600 rounded-bl-lg rounded-br-lg'>
         <div className='post-interaction flex w-full items-center px-6 m-2 dark:bg-secondary'>
             <div className=' flex items-center mr-4'>
+                <button onClick={()=>{(!liked)?addLike(props.id):{}}}>
+
                 {likeIcon}
+                </button>
                 <div className='interacion-text ml-2 text-gray-500 dark:text-white'>
-                    12 likes
+                    {`${props.likes} likes`}
                 </div>                
             </div>
             <div className=' flex items-center'>
             <BsChat className='h-5 w-5'/>
 
                 <div className='interacion-text ml-2 text-gray-500 dark:text-white'>
-                    0 comments
+                {`${props.comments} comments`}
                 </div>                
             </div>
 
@@ -65,7 +76,7 @@ const likeIcon = liked?<IoIosHeart className='h-5 w-5'/>:<IoIosHeartEmpty classN
 
             </div> */}
             <div className='text-sm m-1 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white'>
-                <Link href={"/"}>view all comments</Link>
+                <Link href={`/posts/${props.id}`}>view all comments</Link>
             </div>
 
         </div>

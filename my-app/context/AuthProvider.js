@@ -341,7 +341,7 @@ function signInWithGoogle() {
             },
             logout:async()=>{
                 try{
-
+                    router.push("/")
                     setSessionSigs(null)
                     setCurrentPKP(null)
                     setPKPs([])

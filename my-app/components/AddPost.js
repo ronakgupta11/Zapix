@@ -1,17 +1,21 @@
 
 import React, { useRef, useState } from "react";
+import { nanoid } from 'nanoid/async'
 
 import { upload } from "@spheron/browser-upload";
 import { Polybase } from "@polybase/client";
 import SpinnerBtn from "./SpinnerBtn";
+import { useContext } from "react";
+import { PolybaseContext } from "@/context/PolybaseProvider";
 
 
-const db = new Polybase({
-  defaultNamespace: "pk/0xf50ea4b6ca184c2a54567099bab8960e4057f80161262704102502bacb76b8029902b6bab1a9dcac5701c816db1834ec27760b2ddc6b9efaedcb3fc0906b4aea/social-web-app",
-});
 
 
-function AddPost() {
+
+
+function AddPostBox() {
+
+    const {addPost,postCollectionReference,userRecordRef} = useContext(PolybaseContext)
     const [file, setFile] = useState(null);
     const fileInputRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -20,11 +24,17 @@ function AddPost() {
     const [uploadingPost,setUploadingPost] = useState(false);
 
     const uploadPost = async()=>{
-      console.log("btn clicked")
+      
   
       try {
         setUploadingPost(true);
-        await createColectionRecord();
+        
+        const postId = await nanoid();
+        const postContent = textContent;
+        const image = uploadLink;
+        const timeStamp = "24 nov"
+  
+        await addPost(postId,postContent,image,timeStamp)
 
       }catch(err){
         alert(err);
@@ -36,6 +46,7 @@ function AddPost() {
       }
 
     }
+
 
 
     const handleFileChange = async (event) => {
@@ -79,10 +90,7 @@ function AddPost() {
       };
 
 
-      const createColectionRecord = async()=>{
-        await db.collection("PostData").create(["new-post-1-1", textContent,uploadLink]); 
-        console.log("created record");
-    }
+
 
   return (
     <div className='card w-1/2 h-64 text-white  m-auto'>
@@ -128,4 +136,4 @@ function AddPost() {
   )
 }
 
-export default AddPost
+export default AddPostBox

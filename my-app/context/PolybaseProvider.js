@@ -145,6 +145,8 @@ async function deletePost(postId){
   const res = await postCollectionReference.record(postId).call("del",[])
   return res
 }
+
+
   return(
     <PolybaseContext.Provider
     value={{
@@ -156,7 +158,12 @@ async function deletePost(postId){
       addPost,
       addLike,
       addComment,
-      deletePost
+      deletePost,
+      postCollectionReference,
+      userCollectionReference,
+      userRecordRef,
+      commentCollectionReference,
+      userID
 
 
     }}
