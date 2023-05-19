@@ -4,8 +4,10 @@ import { AuthContext } from '@/context/AuthProvider'
 import { useContext } from 'react'
 import SpinnerBtn from './SpinnerBtn'
 function NavbarC(props) {
-  const {login,logout,sessionSigs,loginInProcess,currentPKP,litNodeClient} = useContext(AuthContext)
+  const {login,logout,loginInProcess,currentPKP,isAuthenticated} = useContext(AuthContext)
+  console.log("isAuth",isAuthenticated())
   return (
+    
 
 
 
@@ -28,18 +30,18 @@ function NavbarC(props) {
     </span>
   </Navbar.Brand>
   <div className="flex md:order-2">
-    {!sessionSigs && !loginInProcess && <Button className='mr-2' onClick={login}>
+    {!isAuthenticated() && !loginInProcess && <Button className='mr-2' onClick={login}>
       Get started
     </Button>}
-    {!sessionSigs && loginInProcess &&<SpinnerBtn/>}
-    {sessionSigs && <Button onClick={logout}>logout</Button> }
+    {!isAuthenticated() && loginInProcess &&<SpinnerBtn/>}
+    {isAuthenticated() && <Button onClick={logout}>logout</Button> }
     <Flowbite>
 
     <DarkThemeToggle />
     </Flowbite>
     <Navbar.Toggle />
   </div>
-  <Navbar.Collapse>
+{ isAuthenticated() && <Navbar.Collapse>
     <Navbar.Link
       href="/"
       active={true}
@@ -55,14 +57,9 @@ function NavbarC(props) {
     <Navbar.Link href="/Profile">
       Profile
     </Navbar.Link>
-    {/* <Navbar.Link href="/navbars">
-      Contact
-    </Navbar.Link> */}
-  </Navbar.Collapse>
+  </Navbar.Collapse>}
 </Navbar>
 <div>
-  {console.log(currentPKP?.publicKey)}
-  {console.log("lit:",litNodeClient)}
   {props.children}
 </div>
 

@@ -11,19 +11,19 @@ export default function App({ Component,  pageProps }) {
       <title>Template App</title>
     </Head>
 
-    {/* <ContextProvider> */}
+
     <AuthProvider>
       <PolybaseProvider>
       <div>
-        {/* <Notifications /> */}
+
         <NavbarC/>
 
-          <Component {...pageProps} />
+        <Component {...pageProps} />
           
       </div>
       </PolybaseProvider>
       </AuthProvider>
-    {/* </ContextProvider> */}
+
   </>
   )
 }

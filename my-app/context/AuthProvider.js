@@ -1,7 +1,6 @@
 import React,{useState,createContext,useCallback,useEffect} from "react";
 import { LitNodeClient } from '@lit-protocol/lit-node-client';
 import { ethers } from 'ethers';
-import { Polybase } from "@polybase/client";
 import {
     getLoginUrl,
     isSignInRedirect,
@@ -87,10 +86,14 @@ export const AuthProvider=({children})=>{
     
         // Clear url params once we have the Google ID token
         // Be sure to use the redirect uri route
-        router.replace('/LightUp', undefined, { shallow: true });
+        router.replace('/', undefined, { shallow: true });
          setTimeout(()=>setLoginInProcess(false),3000)
         
       }, [router]);
+
+      const isAuthenticated = ()=>{
+        return !!sessionSigs
+      }
     
     
     
@@ -315,11 +318,12 @@ function signInWithGoogle() {
         <AuthContext.Provider
         value={{
 
-            googleIdToken,
+            // googleIdToken,
             currentPKP,
-            sessionSigs,
+            // sessionSigs,
             loginInProcess,
             signMessage,
+            isAuthenticated,
 
             login: async()=>{
                 try{
