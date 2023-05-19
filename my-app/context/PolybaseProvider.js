@@ -145,6 +145,9 @@ async function deletePost(postId){
   const res = await postCollectionReference.record(postId).call("del",[])
   return res
 }
+async function createChat(){
+
+}
 
 
   return(
@@ -159,6 +162,7 @@ async function deletePost(postId){
       addLike,
       addComment,
       deletePost,
+      createChat,
       postCollectionReference,
       userCollectionReference,
       userRecordRef,
