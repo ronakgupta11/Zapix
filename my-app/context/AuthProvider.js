@@ -2,10 +2,6 @@ import React,{useState,createContext,useCallback,useEffect} from "react";
 import { LitNodeClient } from '@lit-protocol/lit-node-client';
 import { ethers } from 'ethers';
 import { Polybase } from "@polybase/client";
-
-
-
-
 import {
     getLoginUrl,
     isSignInRedirect,
@@ -18,9 +14,6 @@ import {
   } from '@/utils/relay';
   import { useRouter } from 'next/router';
   const REDIRECT_URI = "http://localhost:3000/"
-
-
-
 export const AuthContext = createContext()
 
 export const AuthProvider=({children})=>{
@@ -32,48 +25,10 @@ export const AuthProvider=({children})=>{
     const [litNodeClient, setLitNodeClient] = useState(null);
     const [currentPKP, setCurrentPKP] = useState();
     const [sessionSigs, setSessionSigs] = useState(null);
-
-    const [signature, setSignature] = useState(null);
     const[loginInProcess,setLoginInProcess] = useState(false);
-    const db = new Polybase({
-      defaultNamespace: "pk/0xf50ea4b6ca184c2a54567099bab8960e4057f80161262704102502bacb76b8029902b6bab1a9dcac5701c816db1834ec27760b2ddc6b9efaedcb3fc0906b4aea/social-web-app",
-    });
-    const collectionReference = db.collection("User");
 
 
-//check is user profile already created 
-const checkUser = async(publicKey)=>{
 
-  const records = await collectionReference.where("id", "==", publicKey).get();
-  
-  return records.data.length
-}
-
-const createUser = async(publicKey)=>{
- 
-  const result = await checkUser(publicKey)
-  if(!result){
-    db.signer(async(data)=>{
-      const signature = await signMessage(data)
-      return {h:"eth-personal-sign",sig:signature}
-    })
-    
-    await collectionReference.create([publicKey])
-    
-  }
-  
-}
-
-async function updateRecord (publicKey) {
-  db.signer(async(data)=>{
-    const signature = await signMessage(data)
-    return {h:"eth-personal-sign",sig:signature}
-  })
-  // .create(functionName, args) args array is defined by the updateName fn in collection schema
-  const recordData = await collectionReference
-    .record(publicKey)
-    .call("setName", ["Ronak Gupta"]);
-}
     useEffect(() => {
         /**
          * Initialize LitNodeClient
@@ -226,14 +181,15 @@ function signInWithGoogle() {
     
         try {
           // Connect to LitNodeClient if not already connected
-          // if (!litNodeClient.ready) {
+          // 
             const litNodeClient = new LitNodeClient({
               litNetwork: 'serrano',
               debug: false,
             });
     
             // Connect to Lit nodes
-            await litNodeClient.connect();
+            if (!litNodeClient.ready) {
+            await litNodeClient.connect();}
             // await litNodeClient.connect();
           // }
     
@@ -364,8 +320,6 @@ function signInWithGoogle() {
             sessionSigs,
             loginInProcess,
             signMessage,
-            createUser,
-            // updateRecord,
 
             login: async()=>{
                 try{

@@ -4,9 +4,11 @@ import lighthouse from '@lighthouse-web3/sdk';
 import { useContext } from 'react';
 import { AuthContext } from '@/context/AuthProvider';
 import { Button } from 'flowbite-react';
+import { PolybaseContext } from '@/context/PolybaseProvider';
 
 function LightUp() {
-  const {currentPKP,signMessage,createUser,updateRecord} = useContext(AuthContext)
+  const {currentPKP,signMessage} = useContext(AuthContext)
+  const {checkUser,createUser,setName,setImage,addPost,addLike,addComment,deletePost} = useContext(PolybaseContext)
   const [fileURL, setFileURL] = React.useState(null);
 
     // const encryptionSignature = async() =>{
@@ -160,8 +162,14 @@ function LightUp() {
       <input onChange={e=>uploadFileEncrypted(e)} type="file" />
       <button onClick={()=>shareFile()}>share file</button>
       <button onClick={()=>decrypt()}>decrypt</button>
-      <Button onClick={()=>createUser(currentPKP?.publicKey)}>create User</Button>
-      <Button onClick={()=>updateRecord(currentPKP?.publicKey)}>create User</Button>
+      <Button onClick={()=>createUser()}>create User</Button>
+      <Button onClick={()=>checkUser()}>check User</Button>
+      <Button onClick={()=>setName("John Doe")}>set Name</Button>
+      <Button onClick={()=>setImage("this is new image url")}>set Image</Button>
+      <Button onClick={()=>addPost("new-5","post content update","post image url update","24 nov timeStamp")}>add Post</Button>
+      <Button onClick={()=>addLike("new-4")}>add Like</Button>
+      <Button onClick={()=>deletePost("new-5")}>del</Button>
+      <Button onClick={()=>addComment("new-4","new-c2","24 nov timeStamp","commment content")}>add comment</Button>
       {
         fileURL?
           <a href={fileURL} target="_blank">viewFile</a>

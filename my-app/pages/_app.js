@@ -2,6 +2,7 @@ import '@/styles/globals.css'
 import NavbarC from '@/components/NavbarC'
 import Head from 'next/head'
 import { AuthProvider } from '@/context/AuthProvider'
+import { PolybaseProvider } from '@/context/PolybaseProvider'
 
 export default function App({ Component,  pageProps }) {
   return(
@@ -12,6 +13,7 @@ export default function App({ Component,  pageProps }) {
 
     {/* <ContextProvider> */}
     <AuthProvider>
+      <PolybaseProvider>
       <div>
         {/* <Notifications /> */}
         <NavbarC/>
@@ -19,6 +21,7 @@ export default function App({ Component,  pageProps }) {
           <Component {...pageProps} />
           
       </div>
+      </PolybaseProvider>
       </AuthProvider>
     {/* </ContextProvider> */}
   </>
