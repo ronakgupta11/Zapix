@@ -5,50 +5,39 @@ import { useEffect,useState } from 'react'
 import PostCard from '@/components/PostCard'
 import ProfileCard from '@/components/ProfileCard'
 import { useRouter } from 'next/router'
+import PostProfile from '@/components/PostProfile'
 
 const ProfilePage = () => {
     const router = useRouter()
     const uid = router.query.id
+    
+
     const{userCollectionReference,postCollectionReference,userID} = useContext(PolybaseContext);
 
-    const [userPosts,setUserPosts] = useState([]);
+    // const [userPosts,setUserPosts] = useState([]);
     const [user,setUser] = useState();
 
     useEffect(()=>{
-        const user = userCollectionReference.record(uid).get().then((v)=>v.data)
+        userCollectionReference.record(uid).get().then((v)=>setUser(v.data))
         
-        const userPosts = user.then((u)=>u.userPosts.map((p)=>postCollectionReference.record(p.id).get().then(v=>v.data)))
-        setUser(user)
+        
             
             
-        setUserPosts(userPosts)
+        // setUserPosts(userPosts)
         
         
     },[])
 
 
 
-    const allRenderedPost = userPosts.then((up)=>up.map((data)=>{
-        console.log("d:",data)
-        
-        const isLiked = data.likedBy.includes(userID,0)
+    const allRenderedPost = user?.userPosts.map((p)=>{
         return(
-            <PostCard 
-            key = {data.id}
-            id = {data.id}
-            content = {data.PostContent}
-            postImage = {data.PostImageUrl}
-            likes = {data.likes}
-            comments = {data.comments}
-            timeStamp = {data.timeStamp}
-            postBy = {data.owner}
-            isLiked = {isLiked}
-            />
+            <PostProfile id ={p.id} name = {user?.name} imageUrl = {user?.imageUrl}/>
         )
-    }))
+    })
   return (
     <div>
-        <ProfileCard/>
+        <ProfileCard name={user?.name} image = {user?.imageUrl} id = {user?.id} desc = {user?.userPosts.length} />
         {allRenderedPost}
     </div>
 

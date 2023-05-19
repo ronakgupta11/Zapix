@@ -76,7 +76,10 @@ function PostPage(props) {
         </div>
         <div className='post-interaction flex w-full items-center justify-between p-2'>
             <div className=' flex items-center'>
+                <button onClick={addLike}>
+
                 {likeIcon}
+                </button>
                 <div className='interacion-text ml-2 dark:text-white text-gray-500'>
                     {`${post?.likes} likes`}
                 </div>                
