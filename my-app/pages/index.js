@@ -27,7 +27,7 @@ export default function Home() {
             This is Home Page
           </div>
           <div>
-            <Link href={"/Explore"}>navigate</Link>
+            <Link href={""}>navigate</Link>
           </div>
           
           {/* <AddPost/> */}

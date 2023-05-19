@@ -36,12 +36,12 @@ const Dashboard = () => {
 
 
     useEffect(()=>{
-        // if(!isAuthenticated()){
-        //     router.push("/")
-        // }
-        // if(!checkUser()){
-        //     createUser()
-        // }
+        if(!isAuthenticated()){
+            router.push("/")
+        }
+        if(!checkUser()){
+            createUser()
+        }
         const collectionReference =  postCollectionReference.onSnapshot(
             (newDoc) => {
               // Handle the change
