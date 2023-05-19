@@ -43,7 +43,8 @@ const createUser = async()=>{
       return {h:"eth-personal-sign",sig:signature}
     })
     
-    await userCollectionReference.create([])
+    const res = await userCollectionReference.create([])
+    console.log("user create",res)
     
   }
   

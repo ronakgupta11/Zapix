@@ -36,35 +36,35 @@ const Dashboard = () => {
 
 
     useEffect(()=>{
-        if(!isAuthenticated()){
-            router.push("/")
-        }
-        if(!checkUser()){
-            createUser()
-        }
-        const collectionReference =  postCollectionReference.onSnapshot(
-            (newDoc) => {
-              // Handle the change
-            //   console.log(newDoc)
-        
-              const data =  newDoc?.data
-              setAllPosts(data)
-            },
-            (err) => {
-              console.log(err)
-              setAllPosts([])
-              // Optional error handler
-            }
-            
-          );
-        
-            
-        
-    
+      if(!isAuthenticated()){
+          router.push("/")
+      }
+      if(!checkUser()){
+          createUser()
+      }
+      const collectionReference =  postCollectionReference.onSnapshot(
+          (newDoc) => {
+            // Handle the change
+          //   console.log(newDoc)
+      
+            const data =  newDoc?.data
+            setAllPosts(data)
+          },
+          (err) => {
+            console.log(err)
+            setAllPosts([])
+            // Optional error handler
+          }
+          
+        );
+      
+          
+      
+  
 
-        
+      
 
-    },[isAuthenticated(),allPosts])
+  },[isAuthenticated(),allPosts])
 
     
   return (
