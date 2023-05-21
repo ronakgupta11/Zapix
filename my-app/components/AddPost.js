@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import { nanoid } from 'nanoid/async'
 
 import { upload } from "@spheron/browser-upload";
-import { Polybase } from "@polybase/client";
+
 import SpinnerBtn from "./SpinnerBtn";
 import { useContext } from "react";
 import { PolybaseContext } from "@/context/PolybaseProvider";
@@ -15,7 +15,7 @@ import { PolybaseContext } from "@/context/PolybaseProvider";
 
 function AddPostBox() {
 
-    const {addPost,postCollectionReference,userRecordRef} = useContext(PolybaseContext)
+    const {addPost} = useContext(PolybaseContext)
     const [file, setFile] = useState(null);
     const fileInputRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -25,9 +25,9 @@ function AddPostBox() {
 
     const uploadPost = async()=>{
       
-  
+      setUploadingPost(true);
       try {
-        setUploadingPost(true);
+        
         
         const postId = await nanoid();
         const postContent = textContent;
@@ -38,11 +38,12 @@ function AddPostBox() {
 
       }catch(err){
         alert(err);
+        setUploadingPost(false)
       } finally {
-        setUploadingPost(false);
         setFile(null);
         setUploadLink("")
         setTextContent("")
+        setUploadingPost(false);
       }
 
     }
@@ -72,9 +73,9 @@ function AddPostBox() {
         if (!file) {
           return;
         }
-    
+        setIsLoading(true);
+        
         try {
-          setIsLoading(true);
           const response = await fetch("/api/uploadToken");
           const responseJson = await response.json();
           const uploadResult = await upload([file], {
@@ -84,6 +85,7 @@ function AddPostBox() {
           console.log("uploaded....",uploadResult)
         } catch (err) {
           alert(err);
+          setIsLoading(false)
         } finally {
           setIsLoading(false);
         }
@@ -93,10 +95,10 @@ function AddPostBox() {
 
 
   return (
-    <div className='card w-1/2 h-64 text-white  m-auto'>
+    <div className='card w-1/2 text-white mx-auto'>
         
 
-   <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+   <div class="w-full mb-4 border border-gray-200 rounded-lg h-fit bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
        <div class="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
            <label for="comment" class="sr-only">Your comment</label>
            <textarea value={textContent} onChange={handleTextChange} id="comment" rows="4" class="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0  dark:text-white dark:placeholder-gray-400" placeholder="Write your Thoughts..."></textarea>
@@ -106,7 +108,7 @@ function AddPostBox() {
              </div>}
        <div class="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
 
-           {isLoading? <SpinnerBtn/>: <button disabled={isLoading} type="submit" onClick={uploadPost} class= " add-post-btn inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800" >
+           {(isLoading || uploadingPost) ? <SpinnerBtn/>: <button disabled={isLoading} type="submit" onClick={uploadPost} class= " add-post-btn inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800" >
                Add Post
            </button>}
            <div class="flex pl-0 space-x-1 sm:pl-2">

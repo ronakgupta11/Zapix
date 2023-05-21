@@ -20,17 +20,8 @@ module.exports = {
 
     },
   },
-  plugins: [require("daisyui"),require('flowbite/plugin')],
-  daisyui: {
-    styled: true,
-    themes: true,
-    base: true,
-    utils: true,
-    logs: true,
-    rtl: false,
-    prefix: "",
-    darkTheme: "dark",
-  },
+  plugins: [require('flowbite/plugin')],
+
   darkMode: 'class',
 }
 

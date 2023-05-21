@@ -39,17 +39,30 @@ const Dashboard = () => {
       if(!isAuthenticated()){
           router.push("/")
       }
-      if(!checkUser()){
-          createUser().then(v => setCreated(true))
-      }else{
-        setCreated(true)
-      }
+      // if(await !checkUser()){
+      //   console.log("user not created, crating user...")
+      //     createUser().then(v => setCreated(true))
+      // }
+      checkUser().then(v=>{
+        if(v==0){
+          // router.push(`/profile/${userID}`)
+          console.log("creating user")
+          createUser().then(v=>console.log(v))
+          
+        }
+        else{
+          
+
+        }
+      })
+
       const collectionReference =  postCollectionReference.onSnapshot(
           (newDoc) => {
             // Handle the change
           //   console.log(newDoc)
       
             const data =  newDoc?.data
+            console.log(data)
             setAllPosts(data)
           },
           (err) => {
@@ -77,13 +90,19 @@ const Dashboard = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className=' bg-white dark:bg-primary min-h-screen '>
+      <main className=' bg-white dark:bg-primary min-h-screen p-8'>
           
-          
+        <div className='h-fit'>
+
         <AddPostBox/>
+        </div>
           {/* <ToastC/> */}
           {/* <ToastC/> */}
+
+          <div>
+
           {allRenderedPost}
+          </div>
           {/* <PostPage/> */}
 
         

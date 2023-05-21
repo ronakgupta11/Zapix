@@ -4,7 +4,7 @@ import { Button,Spinner } from 'flowbite-react'
 function SpinnerBtn() {
   return (
     <Button>
-    <Spinner aria-label="Spinner button example" />
+    <Spinner className='text-white' aria-label="Spinner button example" />
     <span className="pl-3">
       Loading...
     </span>

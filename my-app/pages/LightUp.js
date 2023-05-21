@@ -172,7 +172,7 @@ console.log("PKP:",currentPKP)
       <Button onClick={()=>setImage("this is new image url")}>set Image</Button>
       <Button onClick={()=>addPost("new-5","post content update","post image url update","24 nov timeStamp")}>add Post</Button>
       <Button onClick={()=>addLike("new-4")}>add Like</Button>
-      <Button onClick={()=>deletePost("new-5")}>del POst</Button>
+      <Button onClick={()=>deletePost("0xac901f63ab60a1e95fdee48cb3f1e68a81aa85c26885b899ff10c57ab803493642590112339b8ede02a57a96c3eda5cf7d8e5eb8a7b3e85dc117f4b33fb29cc8")}>del POst</Button>
       <Button onClick={()=>deleteUser()}>del user</Button>
       <Button onClick={()=>addComment("new-4","new-c2","24 nov timeStamp","commment content")}>add comment</Button>
       <Button onClick={()=>createChat("new-chat-created","0x1c55af66f3ECF228d00a6Ea2d93D93b7B8F29CeF")}>create chat</Button>

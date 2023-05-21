@@ -46,7 +46,7 @@ const createUser = async()=>{
       return {h:"eth-personal-sign",sig:signature}
     })
     
-    const res = await userCollectionReference.create([ethId])
+    const res = await userCollectionReference.create([userID])
     console.log("user create",res)
     
   
@@ -90,7 +90,7 @@ async function createPost(id,PostContent,PostImageUrl,timeStamp){
     const signature = await signMessage(data)
     return {h:"eth-personal-sign",sig:signature}
   })
-  const user = db.collection("User").record("0x"+currentPKP?.publicKey.slice(4))
+  const user = db.collection("User").record(userID)
   
    const recordData = await postCollectionReference.create([id,PostContent,PostImageUrl,user,timeStamp])
 return recordData;
@@ -114,7 +114,7 @@ async function addLike(postId){
     const signature = await signMessage(data)
     return {h:"eth-personal-sign",sig:signature}
   })
-  const res = await postCollectionReference.record(postId).call("addLike",[])
+  const res = await postCollectionReference.record(postId).call("addLike",[userID])
 }
 
 async function createComment(id,timeStamp,content){

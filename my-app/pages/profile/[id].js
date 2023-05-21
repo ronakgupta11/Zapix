@@ -7,7 +7,7 @@ import ProfileCard from '@/components/ProfileCard'
 import { useRouter } from 'next/router'
 import PostProfile from '@/components/PostProfile'
 
-const ProfilePage = () => {
+const ProfilePage = (props) => {
     const router = useRouter()
     const uid = router.query.id
     
@@ -26,7 +26,7 @@ const ProfilePage = () => {
         // setUserPosts(userPosts)
         
         
-    },[])
+    },[user])
 
 
 
@@ -36,8 +36,12 @@ const ProfilePage = () => {
         )
     })
   return (
-    <div>
-        <ProfileCard name={user?.name} image = {user?.imageUrl} id = {user?.id} desc = {user?.userPosts.length} />
+
+    
+    <div className=' bg-white dark:bg-gray-900 p-8'>
+
+            
+         <ProfileCard name={user?.name} image = {user?.imageUrl} id = {user?.id} desc = {user?.userPosts.length} />
         {allRenderedPost}
     </div>
 

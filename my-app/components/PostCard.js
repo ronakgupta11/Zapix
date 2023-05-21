@@ -40,7 +40,7 @@ function PostCard(props) {
             <div className='post-text m-2 dark:text-textCol text-gray-500 italic'>
                 {props.content}
             </div>
-            <Link href={`/posts/${props.id}`}><img className="m-2 rounded-lg " src={props.postImage}></img></Link>
+            <Link href={`/posts/${props.id}`}><img className="m-2 rounded-lg max-h-72 " src={props.postImage}></img></Link>
             
         </div>
         {/* post interaction buttton */}
