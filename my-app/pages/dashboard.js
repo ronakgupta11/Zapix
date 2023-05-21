@@ -12,7 +12,7 @@ const Dashboard = () => {
     const {isAuthenticated,currentPKP,signMessage} = useContext(AuthContext);
     const {checkUser,createUser,AddPost,addLike,addComment,postCollectionReference,userID}  = useContext(PolybaseContext)
     const [allPosts,setAllPosts] = useState([])
-
+    const [created,setCreated] = useState(false)
     const allRenderedPost = allPosts.map((post)=>{
         const data = post.data
         const isLiked = data.likedBy.includes(userID,0)
@@ -40,7 +40,9 @@ const Dashboard = () => {
           router.push("/")
       }
       if(!checkUser()){
-          createUser()
+          createUser().then(v => setCreated(true))
+      }else{
+        setCreated(true)
       }
       const collectionReference =  postCollectionReference.onSnapshot(
           (newDoc) => {
@@ -64,7 +66,7 @@ const Dashboard = () => {
 
       
 
-  },[isAuthenticated(),allPosts])
+  },[isAuthenticated(),allPosts,created])
 
     
   return (

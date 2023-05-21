@@ -20,6 +20,8 @@ export const PolybaseProvider = ({children})=>{
   const userRecordRef = userCollectionReference.record(userID);
   const postCollectionReference = db.collection("Post");
   const commentCollectionReference = db.collection("Comment");
+  const chatCollectionReference = db.collection("Chat");
+  const messageCollectionReference = db.collection("Message");
 
 
   //check is user profile already created 
@@ -36,8 +38,8 @@ const checkUser = async()=>{
 // create new user
 const createUser = async()=>{
  
-  const result = await checkUser()
-  if(!result){
+  
+  
     db.signer(async(data)=>{
       const signature = await signMessage(data)
       return {h:"eth-personal-sign",sig:signature}
@@ -46,7 +48,7 @@ const createUser = async()=>{
     const res = await userCollectionReference.create([])
     console.log("user create",res)
     
-  }
+  
   
 }
 
@@ -146,11 +148,39 @@ async function deletePost(postId){
   const res = await postCollectionReference.record(postId).call("del",[])
   return res
 }
-async function createChat(){
+async function createChat(id,chatWithID){
 
+  const creator = userRecordRef;
+  const chatWith = userCollectionReference.record(chatWithID)
+
+  const res = await chatCollectionReference.create([id,creator,chatWith])
+
+  const createdChat =  chatCollectionReference.record(id);
+  // add chat to both users 
+  const res1 = await userRecordRef.call("createChat",[createChat])
+  const res2 = await userCollectionReference.record(chatWithID).call("createChat",[createChat])
+
+
+  console.log("chat created and added to both user approved chat list")
+
+  return res
 }
 
 
+
+
+async function createMessage(id,message,messageImage){
+  await messageCollectionReference.create([id,message,messageImage])
+  console.log("message created");
+
+
+}
+async function addMessageToChat(chatId,messageId){
+  const msg = messageCollectionReference.record(messageId);
+  await chatCollectionReference.record(chatId).call("addMessage",[msg])
+
+
+}
   return(
     <PolybaseContext.Provider
     value={{
@@ -164,11 +194,18 @@ async function createChat(){
       addComment,
       deletePost,
       createChat,
+      getUserChats,
+      getChatMessages,
+      createMessage,
+      addMessageToChat,
       postCollectionReference,
       userCollectionReference,
       userRecordRef,
       commentCollectionReference,
-      userID
+      chatCollectionReference,
+      messageCollectionReference,
+      userID,
+      
 
 
     }}
