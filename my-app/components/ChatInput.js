@@ -8,7 +8,8 @@ import { Spinner } from 'flowbite-react';
 
 
 function ChatInput(props) {
-  const chatId = props.id
+  const chatId = props.chatId
+  console.log("chat is:",chatId)
   const chatWith = props.chatWith
   const [msgText,setMessageText] = useState("")
   const [imageCID,setImageCID] = useState("")

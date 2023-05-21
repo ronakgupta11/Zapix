@@ -2,6 +2,7 @@ import { PolybaseContext } from '@/context/PolybaseProvider'
 import { Button } from 'flowbite-react';
 import React, { useContext, useEffect, useState } from 'react'
 import lighthouse from '@lighthouse-web3/sdk';
+import { AuthContext } from '@/context/AuthProvider';
 
 
 function MessageComp(props) {
@@ -10,7 +11,8 @@ function MessageComp(props) {
   const [inImageView,setInImageView] = useState(false)
 
 
-  const {messageCollectionReference,userID,signMessage,currentPKP} = useContext(PolybaseContext)
+  const {messageCollectionReference,userID} = useContext(PolybaseContext)
+  const {signMessage} = useContext(AuthContext)
   useEffect(()=>{
     messageCollectionReference.record(props.id).get().then(
       (newDoc)=>{
@@ -81,10 +83,12 @@ function MessageComp(props) {
 
   return (
     <div className='flex flex-col items-center justify-center p-2 text-gray-500 dark:text-white border-t border-b dark:border-gray-600'>
-        <div>from: </div>
+        {/* <div>from: </div> */}
+        <div>
         {!inImageView && <Button onClick={handleView}>View photo</Button>}
         {inImageView && <img className='h-64 rounded-lg mx-auto my-4' src={fileURL}>
         </img>}
+        </div>
         <div>{message?.message}</div>
     </div>
   )

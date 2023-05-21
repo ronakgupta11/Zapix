@@ -4,7 +4,7 @@ import { PolybaseContext } from '@/context/PolybaseProvider';
 import MessageComp from '@/components/MessageComp';
 import ChatInput from '@/components/ChatInput';
 
-function chatId() {
+function Chat() {
 
   const router = useRouter()
   const id = router.query.id;
@@ -48,4 +48,4 @@ function chatId() {
   )
 }
 
-export default chatId
+export default Chat
