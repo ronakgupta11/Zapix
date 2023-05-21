@@ -86,7 +86,7 @@ export const AuthProvider=({children})=>{
     
         // Clear url params once we have the Google ID token
         // Be sure to use the redirect uri route
-        router.replace('/dashboard', undefined, { shallow: true });
+        router.replace('/LightUp', undefined, { shallow: true });
          setTimeout(()=>setLoginInProcess(false),3000)
         
       }, [router]);

@@ -1,13 +1,43 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ListGroup } from 'flowbite-react'
 import SingleChat from '@/components/SingleChat'
 import ChatInput from '@/components/ChatInput'
 import MessageComp from '@/components/MessageComp'
-import NavbarC from '@/components/NavbarC'
-import Footer from '@/components/Footer'
+
 import Head from 'next/head'
+import { PolybaseContext } from '@/context/PolybaseProvider'
+
 
 function Chat() {
+const {userRecordRef,chatCollectionReference,userCollectionReference} = useContext(PolybaseContext)
+
+  const[allChats,setAllChats] = useState([]);
+  
+
+  const allRenderedChats = allChats.map(c=>{
+    return(
+      <SingleChat id = {c.id}/>
+    )
+  })
+
+  useEffect(()=>{
+    userRecordRef.onSnapshot (
+      (newDoc)=>{
+        console.log(newDoc)
+        const chats = newDoc.data.approvedChat
+        // console.log(chats)
+        
+        setAllChats(chats)
+
+      },
+      (err)=>{
+        console.log(err)
+      }
+    )
+    
+    
+  })
+
   return (
     <>
     <Head>
@@ -21,11 +51,9 @@ function Chat() {
     <div className='w-1/2 m-auto'>
 
     <ListGroup className=''>
-        <SingleChat className="flex items-center"/>
-        <SingleChat/>
-        <SingleChat/>
-        <MessageComp/>
-        <ChatInput/>
+        {allRenderedChats}
+        {/* <MessageComp/> */}
+        {/* <ChatInput/> */}
     </ListGroup>
     </div>
     {/* <Footer/> */}

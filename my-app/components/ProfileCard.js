@@ -4,8 +4,17 @@ import Link from 'next/link'
 import { Button } from 'flowbite-react'
 import { useContext } from 'react'
 import { PolybaseContext } from '@/context/PolybaseProvider'
+import { nanoid } from 'nanoid/async'
 function ProfileCard(props) {
-  const {userID} = useContext(PolybaseContext)
+
+ 
+  const {userID,createChat} = useContext(PolybaseContext)
+  async function createNewChat(){
+    const id = await nanoid()
+    const chatWith = props.id
+    await createChat(id,chatWith);
+    console.log("create new chat");
+  }
   return (
     <div className="max-w-sm">
     <Card>
@@ -30,7 +39,7 @@ function ProfileCard(props) {
             Update Profile
           </Button>:
           <Button
-            onClick={""}
+            onClick={()=>createNewChat()}
             className="inline-flex items-center rounded-lg bg-blue-700 py-2 px-4 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Add friend

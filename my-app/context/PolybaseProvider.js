@@ -150,6 +150,10 @@ async function deletePost(postId){
 }
 async function createChat(id,chatWithID){
 
+  db.signer(async(data)=>{
+    const signature = await signMessage(data)
+    return {h:"eth-personal-sign",sig:signature}
+  })
   const creator = userRecordRef;
   const chatWith = userCollectionReference.record(chatWithID)
 
@@ -157,8 +161,8 @@ async function createChat(id,chatWithID){
 
   const createdChat =  chatCollectionReference.record(id);
   // add chat to both users 
-  const res1 = await userRecordRef.call("createChat",[createChat])
-  const res2 = await userCollectionReference.record(chatWithID).call("createChat",[createChat])
+  const res1 = await userRecordRef.call("createChat",[createdChat])
+  const res2 = await userCollectionReference.record(chatWithID).call("createChat",[createdChat])
 
 
   console.log("chat created and added to both user approved chat list")
@@ -194,8 +198,6 @@ async function addMessageToChat(chatId,messageId){
       addComment,
       deletePost,
       createChat,
-      getUserChats,
-      getChatMessages,
       createMessage,
       addMessageToChat,
       postCollectionReference,

@@ -7,8 +7,8 @@ import { Button } from 'flowbite-react';
 import { PolybaseContext } from '@/context/PolybaseProvider';
 
 function LightUp() {
-  const {currentPKP,signMessage} = useContext(AuthContext)
-  const {checkUser,createUser,setName,setImage,addPost,addLike,addComment,deletePost} = useContext(PolybaseContext)
+  const {currentPKP,signMessage,userID} = useContext(AuthContext)
+  const {checkUser,createUser,setName,setImage,addPost,addLike,addComment,deletePost,createMessage,addMessageToChat,createChat} = useContext(PolybaseContext)
   const [fileURL, setFileURL] = React.useState(null);
 
     // const encryptionSignature = async() =>{
@@ -73,13 +73,13 @@ function LightUp() {
   }
 
   const shareFile = async() =>{
-    const cid = "Qma9LnKhbw2nXfvMFDpibzRu8mHfnLhJ5QJaS1phnBg7Vb";
+    const cid = "";
 
     // Then get auth message and sign
     // Note: the owner of the file should sign the message.
     const {publicKey, signedMessage} = await signAuthMessage();
 
-    const publicKeyUserB = ["0x086d32e199ef65Bce6a3bE28D103aaf5fc798A51"];
+    const publicKeyUserB = [""];
     
     const res = await lighthouse.shareFile(
       publicKey,
@@ -105,7 +105,7 @@ function LightUp() {
   const signAuthMessage = async() =>{
     // const provider = new ethers.providers.Web3Provider(window.ethereum);
     // const signer = provider.getSigner();
-    const publicKey = currentPKP?.ethAddress.toLowerCase();
+    const publicKey = userID.toLowerCase();
     const messageRequested = (await lighthouse.getAuthMessage(publicKey)).data.message;
     const signedMessage = await signMessage(
       messageRequested
@@ -170,6 +170,9 @@ function LightUp() {
       <Button onClick={()=>addLike("new-4")}>add Like</Button>
       <Button onClick={()=>deletePost("new-5")}>del</Button>
       <Button onClick={()=>addComment("new-4","new-c2","24 nov timeStamp","commment content")}>add comment</Button>
+      <Button onClick={()=>createChat("new-chat1","0x7f44b2119b97bdaf70f6b0e8a4bf8f5a8828f54206567406aebd0a718ab34647b0a2d556e221d08dff781cca2630aee6e653a402df19c3b5b5e3f08ec9ba7b35")}>create chat</Button>
+      <Button onClick={()=>createMessage("new-message","message text","message image url")}>create message</Button>
+      <Button onClick={()=>addMessageToChat("new-chat1","new-message")}>add message to caht</Button>
       {
         fileURL?
           <a href={fileURL} target="_blank">viewFile</a>

@@ -47,10 +47,10 @@ function NavbarC(props) {
       Chat
     </Link>
     <Link href="/dashboard">
-      Chat
+      dashboard
     </Link>
-    <Link href="/Profile">
-      Chat
+    <Link href="/profile">
+      Profile
     </Link>
     <Link href="/Chat">
       Chat
