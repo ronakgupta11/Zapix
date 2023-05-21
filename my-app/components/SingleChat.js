@@ -37,7 +37,7 @@ function SingleChat(props) {
     const chatWith = chatwithuserId;
 
     router.push({
-      pathname:"/Chat",
+      pathname:`/Chat/${id}`,
       query:{id,chatWith}
     })
 

@@ -7,8 +7,9 @@ import { Button } from 'flowbite-react';
 import { PolybaseContext } from '@/context/PolybaseProvider';
 
 function LightUp() {
-  const {currentPKP,signMessage,userID} = useContext(AuthContext)
-  const {checkUser,createUser,setName,setImage,addPost,addLike,addComment,deletePost,createMessage,addMessageToChat,createChat} = useContext(PolybaseContext)
+  const {currentPKP,signMessage} = useContext(AuthContext)
+  const {userID} = useContext(PolybaseContext)
+  const {checkUser,createUser,setName,setImage,addPost,deleteUser,addLike,addComment,deletePost,createMessage,addMessageToChat,createChat} = useContext(PolybaseContext)
   const [fileURL, setFileURL] = React.useState(null);
 
     // const encryptionSignature = async() =>{
@@ -26,7 +27,8 @@ function LightUp() {
     //     });
     //   }
 
-
+console.log("uid:",userID)
+console.log("PKP:",currentPKP)
       const progressCallback = (progressData) => {
         let percentageDone =
           100 - (progressData?.total / progressData?.uploaded)?.toFixed(2);
@@ -50,6 +52,7 @@ function LightUp() {
   try{
     // const sig = await encryptionSignature();
     const sig = await signAuthMessage();
+    console.log("sig:",sig)
     const response = await lighthouse.uploadEncrypted(
       e,
       "be74ef67.6a825190433a450a872e651c54303d6f",
@@ -105,6 +108,7 @@ function LightUp() {
   const signAuthMessage = async() =>{
     // const provider = new ethers.providers.Web3Provider(window.ethereum);
     // const signer = provider.getSigner();
+    console.log (currentPKP?.ethAddress.toLowerCase())
     const publicKey = userID.toLowerCase();
     const messageRequested = (await lighthouse.getAuthMessage(publicKey)).data.message;
     const signedMessage = await signMessage(
@@ -164,15 +168,16 @@ function LightUp() {
       <button onClick={()=>decrypt()}>decrypt</button>
       <Button onClick={()=>createUser()}>create User</Button>
       <Button onClick={()=>checkUser()}>check User</Button>
-      <Button onClick={()=>setName("John Doe")}>set Name</Button>
+      <Button onClick={()=>setName("John Uncle")}>set Name</Button>
       <Button onClick={()=>setImage("this is new image url")}>set Image</Button>
       <Button onClick={()=>addPost("new-5","post content update","post image url update","24 nov timeStamp")}>add Post</Button>
       <Button onClick={()=>addLike("new-4")}>add Like</Button>
-      <Button onClick={()=>deletePost("new-5")}>del</Button>
+      <Button onClick={()=>deletePost("new-5")}>del POst</Button>
+      <Button onClick={()=>deleteUser()}>del user</Button>
       <Button onClick={()=>addComment("new-4","new-c2","24 nov timeStamp","commment content")}>add comment</Button>
-      <Button onClick={()=>createChat("new-chat1","0x7f44b2119b97bdaf70f6b0e8a4bf8f5a8828f54206567406aebd0a718ab34647b0a2d556e221d08dff781cca2630aee6e653a402df19c3b5b5e3f08ec9ba7b35")}>create chat</Button>
+      <Button onClick={()=>createChat("new-chat-created","0x1c55af66f3ECF228d00a6Ea2d93D93b7B8F29CeF")}>create chat</Button>
       <Button onClick={()=>createMessage("new-message","message text","message image url")}>create message</Button>
-      <Button onClick={()=>addMessageToChat("new-chat1","new-message")}>add message to caht</Button>
+      <Button onClick={()=>addMessageToChat("new-chat-eth","new-message")}>add message to caht</Button>
       {
         fileURL?
           <a href={fileURL} target="_blank">viewFile</a>

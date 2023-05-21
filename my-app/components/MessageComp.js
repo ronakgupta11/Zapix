@@ -1,6 +1,8 @@
 import { PolybaseContext } from '@/context/PolybaseProvider'
 import { Button } from 'flowbite-react';
 import React, { useContext, useEffect, useState } from 'react'
+import lighthouse from '@lighthouse-web3/sdk';
+
 
 function MessageComp(props) {
   const [message,setMessage] = useState()
@@ -8,7 +10,7 @@ function MessageComp(props) {
   const [inImageView,setInImageView] = useState(false)
 
 
-  const {messageCollectionReference,userID,signMessage} = useContext(PolybaseContext)
+  const {messageCollectionReference,userID,signMessage,currentPKP} = useContext(PolybaseContext)
   useEffect(()=>{
     messageCollectionReference.record(props.id).get().then(
       (newDoc)=>{

@@ -16,7 +16,8 @@ export const PolybaseProvider = ({children})=>{
 
 
   const userCollectionReference = db.collection("User");
-  const userID = "0x"+currentPKP?.publicKey.slice(4)
+  // const userID = "0x"+currentPKP?.publicKey.slice(4)
+  const userID = currentPKP?.ethAddress;
   const userRecordRef = userCollectionReference.record(userID);
   const postCollectionReference = db.collection("Post");
   const commentCollectionReference = db.collection("Comment");
@@ -45,7 +46,7 @@ const createUser = async()=>{
       return {h:"eth-personal-sign",sig:signature}
     })
     
-    const res = await userCollectionReference.create([])
+    const res = await userCollectionReference.create([ethId])
     console.log("user create",res)
     
   
@@ -174,6 +175,10 @@ async function createChat(id,chatWithID){
 
 
 async function createMessage(id,message,messageImage){
+  db.signer(async(data)=>{
+    const signature = await signMessage(data)
+    return {h:"eth-personal-sign",sig:signature}
+  })
   await messageCollectionReference.create([id,message,messageImage])
   console.log("message created");
 
@@ -184,6 +189,13 @@ async function addMessageToChat(chatId,messageId){
   await chatCollectionReference.record(chatId).call("addMessage",[msg])
 
 
+}
+async function deleteUser(){
+  db.signer(async(data)=>{
+    const signature = await signMessage(data)
+    return {h:"eth-personal-sign",sig:signature}
+  })
+  await userRecordRef.call("del",[])
 }
   return(
     <PolybaseContext.Provider
@@ -200,6 +212,7 @@ async function addMessageToChat(chatId,messageId){
       createChat,
       createMessage,
       addMessageToChat,
+      deleteUser,
       postCollectionReference,
       userCollectionReference,
       userRecordRef,
@@ -207,6 +220,7 @@ async function addMessageToChat(chatId,messageId){
       chatCollectionReference,
       messageCollectionReference,
       userID,
+      
       
 
 
