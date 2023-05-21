@@ -185,6 +185,10 @@ async function createMessage(id,message,messageImage){
 
 }
 async function addMessageToChat(chatId,messageId){
+  db.signer(async(data)=>{
+    const signature = await signMessage(data)
+    return {h:"eth-personal-sign",sig:signature}
+  })
   const msg = messageCollectionReference.record(messageId);
   await chatCollectionReference.record(chatId).call("addMessage",[msg])
 

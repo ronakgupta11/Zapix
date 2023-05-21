@@ -46,8 +46,7 @@ function ProfileCard(props) {
           {props.desc} posts
         </span>
         <div className="mt-4 flex space-x-3 lg:mt-6">
-          {console.log("user id ",userID)}
-          {console.log("prop id ",!props.id)}
+          
           {(userID === props.id)?<Button
             onClick={()=>router.push("/profile")}
             className="inline-flex items-center rounded-lg bg-blue-700 py-2 px-4 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"

@@ -17,7 +17,7 @@ function SingleChat(props) {
         const chat = newDoc.data
         // console.log("chat:",chat)
 
-        const chatWithId = (userID===chat.chatWith.id)?chat.creator:chat.chatWith.id;
+        const chatWithId = (userID===chat.chatWith.id)?chat.creator.id:chat.chatWith.id;
         setchatwithUserId(chatWithId)
         
         setChat(chat)

@@ -46,9 +46,9 @@ const {userRecordRef,chatCollectionReference,userCollectionReference} = useConte
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <main className='bg-white dark:bg-primary min-h-screen'>
+    <main className='bg-white dark:bg-primary min-h-screen p-8'>
       {/* <NavbarC/> */}
-    <div className='w-1/2 m-auto'>
+    <div className='w-1/2 m-auto '>
 
     <ListGroup className=''>
         {allRenderedChats}
