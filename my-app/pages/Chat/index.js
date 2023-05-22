@@ -58,7 +58,7 @@ const {userRecordRef,chatCollectionReference,userCollectionReference} = useConte
       {/* <NavbarC/> */}
     <div className='lg:w-1/2 sm:w-full m-auto '>
 
-    {allChats.length && <ListGroup className=''>
+    {!!allChats.length && <ListGroup className=''>
         {allRenderedChats}
         {/* <MessageComp/> */}
         {/* <ChatInput/> */}

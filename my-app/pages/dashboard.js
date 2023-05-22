@@ -5,6 +5,7 @@ import PostCard from '@/components/PostCard'
 import { PolybaseContext } from '@/context/PolybaseProvider'
 import { AuthContext } from '@/context/AuthProvider'
 import { useRouter } from 'next/router'
+import Placeholder from '@/components/Placeholder'
 
 
 const Dashboard = () => {
@@ -102,10 +103,11 @@ const Dashboard = () => {
           {/* <ToastC/> */}
           {/* <ToastC/> */}
 
-          <div>
+          {!!allPosts.length &&<div>
 
           {allRenderedPost}
-          </div>
+          </div>}
+          {!allPosts.length && <Placeholder/>}
           {/* <PostPage/> */}
 
         

@@ -24,7 +24,7 @@ function NavbarC(props) {
     <img
       src="logo.jpg"
       className="mr-3 rounded-lg h-6 sm:h-9"
-      alt="Flowbite Logo"
+      alt=""
     />
     <span className="self-center whitespace-nowrap text-2xl font-bold italic text-gray-700 dark:text-white">
       Zapix
