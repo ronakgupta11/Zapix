@@ -5,6 +5,7 @@ import MessageComp from '@/components/MessageComp';
 import ChatInput from '@/components/ChatInput';
 import { AuthContext } from '@/context/AuthProvider';
 import AvatarC from '@/components/AvatarC';
+import Link from 'next/link';
 
 function Chat() {
   const {isAuthenticated} = useContext(AuthContext);
