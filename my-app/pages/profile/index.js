@@ -123,7 +123,7 @@ const router = useRouter()
 
     
     <div className='w-full' >
-      <ProfileCard name={user?.name} image = {user?.imageUrl} />
+      <ProfileCard name={user?.name} image = {user?.imageUrl} id = {userID} desc = {posts?.length}/>
       <div className='lg:w-1/2 sm:w-full mx-auto'>
 
       
