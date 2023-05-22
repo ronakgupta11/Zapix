@@ -12,7 +12,7 @@ import {
     pollRequestUntilTerminalState,
   } from '@/utils/relay';
   import { useRouter } from 'next/router';
-  const REDIRECT_URI = "http://localhost:3000/"
+  const REDIRECT_URI = "http://fvm-dataverse-hack.vercel.app/"
 export const AuthContext = createContext()
 
 export const AuthProvider=({children})=>{
@@ -86,7 +86,7 @@ export const AuthProvider=({children})=>{
     
         // Clear url params once we have the Google ID token
         // Be sure to use the redirect uri route
-        router.replace('/LightUp', undefined, { shallow: true });
+        router.replace('/dashboard', undefined, { shallow: true });
          setTimeout(()=>setLoginInProcess(false),3000)
         
       }, [router]);
