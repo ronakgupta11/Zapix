@@ -6,7 +6,7 @@ import PostCard from '@/components/PostCard'
 import ProfileCard from '@/components/ProfileCard'
 import { useRouter } from 'next/router'
 import PostProfile from '@/components/PostProfile'
-
+import { AuthContext } from '@/context/AuthProvider'
 const ProfilePage = (props) => {
     const router = useRouter()
     const uid = router.query.id
