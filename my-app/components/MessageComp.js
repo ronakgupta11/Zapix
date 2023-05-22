@@ -1,14 +1,16 @@
 import { PolybaseContext } from '@/context/PolybaseProvider'
-import { Button } from 'flowbite-react';
+import { Button, Spinner } from 'flowbite-react';
 import React, { useContext, useEffect, useState } from 'react'
 import lighthouse from '@lighthouse-web3/sdk';
 import { AuthContext } from '@/context/AuthProvider';
+import {BsFillPlayFill} from "react-icons/bs"
 
 
 function MessageComp(props) {
   const [message,setMessage] = useState()
   const [fileURL, setFileURL] = useState("");
   const [inImageView,setInImageView] = useState(false)
+  const [isLoading,setIsLoading] = useState(false)
 
 
   const {messageCollectionReference,userID} = useContext(PolybaseContext)
@@ -38,6 +40,8 @@ function MessageComp(props) {
 
     /* Decrypt file */
     const decrypt = async() =>{
+      setIsLoading(true)
+      try{
       // Fetch file encryption key
       const cid = message?.msgImageCID; //replace with your IPFS CID
       const {publicKey, signedMessage} = await signAuthMessage();
@@ -74,6 +78,13 @@ function MessageComp(props) {
       const url = URL.createObjectURL(decrypted);
       console.log(url);
       setFileURL(url);
+      }
+      catch(err){
+        alert(err)
+      }
+      finally{
+        setIsLoading(false)
+      }
     }
 
     async function handleView(){
@@ -85,8 +96,13 @@ function MessageComp(props) {
     <div className='flex flex-col items-center justify-center p-2 text-gray-500 dark:text-white border-t border-b dark:border-gray-600'>
         {/* <div>from: </div> */}
         <div>
-        {!inImageView && <Button onClick={handleView}>View photo</Button>}
-        {inImageView && <img className='h-64 rounded-lg mx-auto my-4' src={fileURL}>
+        {!inImageView  && !isLoading && <Button className='rounded-xlg bg-gray-400' onClick={handleView}>
+         <BsFillPlayFill/>
+          View photo
+          
+          </Button>}
+        {isLoading && <Spinner/>}
+        {inImageView && !isLoading && <img className='h-64 rounded-lg mx-auto my-4' src={fileURL}>
         </img>}
         </div>
         <div>{message?.message}</div>

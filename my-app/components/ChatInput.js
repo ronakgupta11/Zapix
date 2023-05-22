@@ -75,7 +75,7 @@ function ChatInput(props) {
   }
 
   const shareFile = async() =>{
-    setIsLoading(true)
+   
     const cid = imageCID;
 
     // Then get auth message and sign
@@ -90,7 +90,7 @@ function ChatInput(props) {
       cid,
       signedMessage
     );
-    setIsLoading(false)
+
 
     console.log(res)
     /*
@@ -129,6 +129,7 @@ function ChatInput(props) {
 
 
   async function handleSend(){
+    setIsLoading(true)
     try{
     await shareFile()
     console.log("file shared")
@@ -142,6 +143,11 @@ function ChatInput(props) {
     }
     catch(err){
       alert(err)
+    }
+    finally{
+      setMessageText("")
+      setImageCID("")
+      setIsLoading(false)
     }
 
     //create message 

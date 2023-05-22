@@ -33,14 +33,14 @@ function Chat() {
       )
   })
   return (
-    <div className='w-full h-screen bg-white dark:bg-gray-900 p-8'>
+    <div className='w-full  bg-white dark:bg-gray-900 p-8'>
 
-    <div className='w-1/2 m-auto h-full border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 p-4 flex flex-col  justify-around'>
-      <div className='h-4/5 w-full'>
+    <div className='w-1/2 m-auto border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 p-4 flex flex-col  justify-around'>
+      <div className='h-screen w-full overflow-y-scroll'>
 
         {allRenderedMessages}
       </div>
-        <ChatInput chatId = {id} chatWith = {chatWith}/>
+        <ChatInput className="fixed bottom-1" chatId = {id} chatWith = {chatWith}/>
 
     </div>
     </div>
