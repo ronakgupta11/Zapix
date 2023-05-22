@@ -1,42 +1,50 @@
 import React, { useState,useEffect } from 'react'
-import { Polybase } from "@polybase/client";
-import PostCard from '@/components/PostCard';
+// import { Polybase } from "@polybase/client";
+// import PostCard from '@/components/PostCard';
 import Head from 'next/head';
-
-import Footer from '@/components/Footer';
-import NavbarC from '@/components/NavbarC';
-const db = new Polybase({
-  defaultNamespace: "pk/0xf50ea4b6ca184c2a54567099bab8960e4057f80161262704102502bacb76b8029902b6bab1a9dcac5701c816db1834ec27760b2ddc6b9efaedcb3fc0906b4aea/social-web-app",
-});
+import { useRouter } from 'next/router';
+// import Footer from '@/components/Footer';
+// import NavbarC from '@/components/NavbarC';
+import { AuthContext } from '@/context/AuthProvider';
+import { useContext } from 'react';
+// const db = new Polybase({
+//   defaultNamespace: "pk/0xf50ea4b6ca184c2a54567099bab8960e4057f80161262704102502bacb76b8029902b6bab1a9dcac5701c816db1834ec27760b2ddc6b9efaedcb3fc0906b4aea/social-web-app",
+// });
 
 function Explore() {
-  const [postData,setPostData] = useState([])
-  const postDataRef = db.collection("PostData")
+  const router = useRouter()
+  // const [postData,setPostData] = useState([])
+  // const postDataRef = db.collection("PostData")
+  const {isAuthenticated} = useContext(AuthContext)
+
 
 
   useEffect(()=>{
-        postDataRef
-        .onSnapshot(
-            querySnapshot =>{
-              console.log(querySnapshot)
-                const postList = [];
-                querySnapshot.data.map((doc)=>{
-                    postList.push(doc.data)
-                })
-                setPostData(postList);
-                console.log(postList)
-                // console.log(todos)
-            }
-        )
+    if(!isAuthenticated()){
+      router.push("/")
+  }
+        // postDataRef
+        // .onSnapshot(
+        //     querySnapshot =>{
+        //       console.log(querySnapshot)
+        //         const postList = [];
+        //         querySnapshot.data.map((doc)=>{
+        //             postList.push(doc.data)
+        //         })
+        //         setPostData(postList);
+        //         console.log(postList)
+        //         // console.log(todos)
+        //     }
+        // )
     },[])
 
-    const posts = postData.map(
-      (post)=>{
-        return(
-          <PostCard textContent = {post.PostContent} image = {post.PostImageUrl}/>
-        )
-      }
-    )
+    // const posts = postData.map(
+    //   (post)=>{
+    //     return(
+    //       <PostCard textContent = {post.PostContent} image = {post.PostImageUrl}/>
+    //     )
+    //   }
+    // )
 
 
   return (
@@ -50,10 +58,12 @@ function Explore() {
       <main className='bg-white dark:bg-primary min-h-screen'>
           {/* <NavbarC/>
            */}
+<div className='w-full h-full'>
+<h1 className='font-5xl text-black dark:text-white m-auto'>Oh No!, Some Exception Happened</h1>
+  
+</div>
 
-        
-
-          {posts}
+          {/* {posts} */}
         
 
         

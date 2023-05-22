@@ -97,7 +97,7 @@ function MessageComp(props) {
         {/* <div>from: </div> */}
         <div>
         {!inImageView  && !isLoading && <Button className='rounded-xlg bg-gray-400' onClick={handleView}>
-         <BsFillPlayFill/>
+         <BsFillPlayFill className='h-5 w-5 mr-2'/>
           View photo
           
           </Button>}

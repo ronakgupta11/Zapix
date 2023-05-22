@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 
 const Dashboard = () => {
     const router = useRouter()
-    const {isAuthenticated,currentPKP,signMessage} = useContext(AuthContext);
+    const {isAuthenticated} = useContext(AuthContext);
     const {checkUser,createUser,AddPost,addLike,addComment,postCollectionReference,userID}  = useContext(PolybaseContext)
     const [allPosts,setAllPosts] = useState([])
     const [created,setCreated] = useState(false)

@@ -10,6 +10,7 @@ import PostProfile from '@/components/PostProfile'
 const ProfilePage = (props) => {
     const router = useRouter()
     const uid = router.query.id
+  const {isAuthenticated} = useContext(AuthContext)
     
 
     const{userCollectionReference,postCollectionReference,userID} = useContext(PolybaseContext);
@@ -18,6 +19,10 @@ const ProfilePage = (props) => {
     const [user,setUser] = useState();
 
     useEffect(()=>{
+      if(!isAuthenticated()){
+        router.push("/")
+    }
+      
         userCollectionReference.record(uid).get().then((v)=>setUser(v.data))
         
         
@@ -35,6 +40,7 @@ const ProfilePage = (props) => {
             <PostProfile id ={p.id} name = {user?.name} imageUrl = {user?.imageUrl}/>
         )
     })
+
   return (
 
     

@@ -1,9 +1,10 @@
 import { Button } from 'flowbite-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { upload } from "@spheron/browser-upload";
 import SpinnerBtn from '@/components/SpinnerBtn';
 import { useContext } from "react";
 import { PolybaseContext } from "@/context/PolybaseProvider";
+import { AuthContext } from '@/context/AuthProvider';
 
 
 
@@ -17,6 +18,8 @@ const Profile = () => {
     const [uploadLink, setUploadLink] = useState("");
 
     const {setName,setImage} = useContext(PolybaseContext);
+  const {isAuthenticated} = useContext(AuthContext)
+
 
 
 
@@ -77,11 +80,17 @@ const Profile = () => {
         setIsLoading(false)
     }
     }
+
+    useEffect(()=>{
+      if(!isAuthenticated()){
+        router.push("/")
+    }
+    })
   return (
     <div className='w-full h-screen bg-white dark:bg-gray-900 p-8'>
 
     
-    <div className='w-1/2 mx-auto' >
+    <div className='lg:w-1/2 sm:w-full mx-auto' >
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Upload Profile Image</label>
 <input  onChange={handleFile} class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" type="file"/>
 <div class="mt-1 mb-2 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">A profile picture is useful to confirm your are logged into your account</div>

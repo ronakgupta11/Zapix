@@ -3,8 +3,10 @@ import { useRouter } from 'next/router'
 import { PolybaseContext } from '@/context/PolybaseProvider';
 import MessageComp from '@/components/MessageComp';
 import ChatInput from '@/components/ChatInput';
+import { AuthContext } from '@/context/AuthProvider';
 
 function Chat() {
+  const {isAuthenticated} = useContext(AuthContext);
 
   const router = useRouter()
   const id = router.query.id;
@@ -13,6 +15,10 @@ function Chat() {
   const [allMessages,setAllMessages] = useState([])
 
   useEffect(()=>{
+    if(!isAuthenticated()){
+      router.push("/")
+    }
+
     chatCollectionReference.record(id).onSnapshot(
       (newDoc)=>{
         const chat = newDoc.data;
@@ -35,7 +41,7 @@ function Chat() {
   return (
     <div className='w-full  bg-white dark:bg-gray-900 p-8'>
 
-    <div className='w-1/2 m-auto border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 p-4 flex flex-col  justify-around'>
+    <div className='lg:w-1/2 sm:w-full m-auto border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 p-4 flex flex-col  justify-around'>
       <div className='h-screen w-full overflow-y-scroll'>
 
         {allRenderedMessages}

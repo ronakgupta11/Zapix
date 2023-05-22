@@ -6,9 +6,11 @@ import MessageComp from '@/components/MessageComp'
 
 import Head from 'next/head'
 import { PolybaseContext } from '@/context/PolybaseProvider'
+import { AuthContext } from '@/context/AuthProvider'
 
 
 function Chat() {
+  const {isAuthenticated} = useContext(AuthContext)
 const {userRecordRef,chatCollectionReference,userCollectionReference} = useContext(PolybaseContext)
 
   const[allChats,setAllChats] = useState([]);
@@ -21,6 +23,9 @@ const {userRecordRef,chatCollectionReference,userCollectionReference} = useConte
   })
 
   useEffect(()=>{
+    if(!isAuthenticated()){
+      router.push("/")
+  }
     userRecordRef.onSnapshot (
       (newDoc)=>{
         console.log(newDoc)
@@ -48,7 +53,7 @@ const {userRecordRef,chatCollectionReference,userCollectionReference} = useConte
     </Head>
     <main className='bg-white dark:bg-primary min-h-screen p-8'>
       {/* <NavbarC/> */}
-    <div className='w-1/2 m-auto '>
+    <div className='lg:w-1/2 sm:w-full m-auto '>
 
     <ListGroup className=''>
         {allRenderedChats}

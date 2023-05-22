@@ -9,6 +9,7 @@ import { useEffect } from 'react'
 import { nanoid } from 'nanoid/async'
 import Comment from '@/components/Comment'
 import SpinnerBtn from '@/components/SpinnerBtn'
+import { AuthContext } from '@/context/AuthProvider'
 function PostPage(props) {
     const router = useRouter();
     const postId = router.query.id
@@ -18,6 +19,8 @@ function PostPage(props) {
     const [comments,setComments] = useState([])
     const [isLoading,setIsLoading] = useState(false)
     // console.log(postId)
+  const {isAuthenticated} = useContext(AuthContext)
+
 
 
       const {addComment,addLike,commentCollectionReference,postCollectionReference,userCollectionReference,userID} = useContext(PolybaseContext)
@@ -32,6 +35,9 @@ function PostPage(props) {
 
 
     useEffect(()=>{
+        if(!isAuthenticated()){
+            router.push("/")
+        }
         postCollectionReference.record(postId).onSnapshot(
             (val)=>{
                 const data = val.data
