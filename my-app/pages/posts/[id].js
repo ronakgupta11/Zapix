@@ -98,7 +98,7 @@ function PostPage(props) {
         <div class="flex items-center space-x-4 w-full border-b dark:border-gray-600  h-16 p-4">
         <AvatarC image = {postBy?.imageUrl}/>
         <div class="font-medium dark:text-white">
-            <div>{postBy?.name}</div>
+            <Link href={`/profile/${postBy?.id}`}><div>{postBy?.name}</div></Link>
             <div class="text-sm text-gray-500 dark:text-gray-400">{post?.timeStamp}</div>
         </div>
         </div>
