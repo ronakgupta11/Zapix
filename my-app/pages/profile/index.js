@@ -5,6 +5,7 @@ import SpinnerBtn from '@/components/SpinnerBtn';
 import { useContext } from "react";
 import { PolybaseContext } from "@/context/PolybaseProvider";
 import { AuthContext } from '@/context/AuthProvider';
+import Head from 'next/head';
 
 
 
@@ -87,7 +88,16 @@ const Profile = () => {
     }
     })
   return (
-    <div className='w-full h-screen bg-white dark:bg-gray-900 p-8'>
+    <>
+    <Head>
+        <title>App Name-Profile</title>
+        <meta name="description" content="Web3 Social App" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+
+    <main className='w-full h-screen bg-white dark:bg-gray-900 p-8'>
 
     
     <div className='lg:w-1/2 sm:w-full mx-auto' >
@@ -101,7 +111,8 @@ const Profile = () => {
 {isLoading?<SpinnerBtn className='mx-auto mt-4'/>:<Button onClick={update}> Update Profile</Button>}
 </div>
         </div>
-        </div>
+        </main>
+        </>
     
   )
 }
