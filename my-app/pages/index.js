@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>App Name</title>
+        <title>Zapix</title>
         <meta name="description" content="Web3 Social App" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         
