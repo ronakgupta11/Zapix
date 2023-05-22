@@ -95,7 +95,7 @@ function AddPostBox() {
 
 
   return (
-    <div className='card w-1/2 text-white mx-auto'>
+    <div className='card lg:w-1/2 sm:w-full text-white mx-auto'>
         
 
    <div class="w-full mb-4 border border-gray-200 rounded-lg h-fit bg-gray-50 dark:bg-gray-700 dark:border-gray-600">

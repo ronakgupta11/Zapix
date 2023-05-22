@@ -26,7 +26,7 @@ function PostCard(props) {
 
   
   return (
-    <div className='card w-1/2 border border-gray-200 dark:border-borderCol rounded-lg dark:bg-primary-focus  items-center justify-center flex flex-col  m-auto mb-4'>
+    <div className='card lg:w-1/2 sm:w-full border border-gray-200 dark:border-borderCol rounded-lg dark:bg-primary-focus  items-center justify-center flex flex-col  m-auto mb-4'>
         {/* user info */}
         <div class="flex items-center space-x-4 w-full rounded-tl-lg rounded-tr-lg h-16 p-4 bg-light-secondary dark:bg-secondary border-b dark:border-gray-600">
         <AvatarC image = {postBy?.imageUrl}/>
