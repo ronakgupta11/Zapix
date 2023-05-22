@@ -4,6 +4,7 @@ import { PolybaseContext } from '@/context/PolybaseProvider';
 import MessageComp from '@/components/MessageComp';
 import ChatInput from '@/components/ChatInput';
 import { AuthContext } from '@/context/AuthProvider';
+import AvatarC from '@/components/AvatarC';
 
 function Chat() {
   const {isAuthenticated} = useContext(AuthContext);
