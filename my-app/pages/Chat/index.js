@@ -6,6 +6,7 @@ import SingleChat from '@/components/SingleChat'
 import Head from 'next/head'
 import { PolybaseContext } from '@/context/PolybaseProvider'
 import { AuthContext } from '@/context/AuthProvider'
+import Placeholder from '@/components/Placeholder'
 
 
 function Chat() {
@@ -57,11 +58,12 @@ const {userRecordRef,chatCollectionReference,userCollectionReference} = useConte
       {/* <NavbarC/> */}
     <div className='lg:w-1/2 sm:w-full m-auto '>
 
-    <ListGroup className=''>
+    {allChats.length && <ListGroup className=''>
         {allRenderedChats}
         {/* <MessageComp/> */}
         {/* <ChatInput/> */}
-    </ListGroup>
+    </ListGroup>}
+    {!allChats.length && <Placeholder/>}
     </div>
     {/* <Footer/> */}
     </main>
