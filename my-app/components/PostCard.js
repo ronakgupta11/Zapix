@@ -11,7 +11,7 @@ import { useContext } from 'react'
 function PostCard(props) {
 
     const {addLike,userCollectionReference} = useContext(PolybaseContext)
-    const liked = props.isLiked
+    const [liked,setLiked] = useState(!!props.isLiked)
 
     const postByUserId = props.postBy.id
     const [postBy,setPostBy] = useState() 
@@ -24,6 +24,19 @@ function PostCard(props) {
     
     const likeIcon = liked?<IoIosHeart className='h-5 w-5'/>:<IoIosHeartEmpty className='h-5 w-5'/>
 
+    function handleLike(){
+        if(liked){
+            return
+        }
+        try{
+          
+            setLiked(true)
+            addLike(props.id)
+        }
+        catch(err){
+            alert(err)
+        }
+    }
   
   return (
     <div className='card lg:w-1/2 sm:w-full border border-gray-200 dark:border-borderCol rounded-lg dark:bg-primary-focus  items-center justify-center flex flex-col  m-auto mb-4'>
@@ -48,7 +61,7 @@ function PostCard(props) {
         <div className='flex flex-col items-center bg-light-secondary dark:bg-secondary w-full border-t dark:border-gray-600 rounded-bl-lg rounded-br-lg'>
         <div className='post-interaction flex w-full items-center px-6 m-2 dark:bg-secondary'>
             <div className=' flex items-center mr-4'>
-                <button onClick={()=>{(!liked)?addLike(props.id):{}}}>
+                <button onClick={handleLike}>
 
                 {likeIcon}
                 </button>

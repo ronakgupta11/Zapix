@@ -52,7 +52,21 @@ function PostPage(props) {
 
 
     },[post])
-    const liked = post?.likedBy.includes(userID)
+    const [liked,setLiked] = useState(!!post?.likedBy.includes(userID,0))
+    function handleLike(){
+        if(liked){
+            return
+        }
+        try{
+          
+            setLiked(true)
+            addLike(postId)
+        }
+        catch(err){
+            alert(err)
+        }
+    }
+
     console.log(liked)
     const likeIcon = liked?<IoIosHeart className='h-5 w-5'/>:<IoIosHeartEmpty className='h-5 w-5'/>
     async function postComment(){
@@ -98,7 +112,7 @@ function PostPage(props) {
         </div>
         <div className='post-interaction flex w-full items-center justify-between p-2'>
             <div className=' flex items-center'>
-                <button onClick={addLike}>
+                <button onClick={handleLike}>
 
                 {likeIcon}
                 </button>
