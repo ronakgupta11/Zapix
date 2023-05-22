@@ -43,9 +43,6 @@ function NavbarC(props) {
     {isAuthenticated() && <Navbar.Toggle />}
   </div>
 { isAuthenticated() && <Navbar.Collapse className='font-bold text-gray-600 dark:text-white'>
-    <Link href="/">
-      Chat
-    </Link>
     <Link href="/dashboard">
       dashboard
     </Link>
