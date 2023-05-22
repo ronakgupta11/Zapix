@@ -7,7 +7,7 @@ import { AuthContext } from '@/context/AuthProvider';
 import AvatarC from '@/components/AvatarC';
 import Link from 'next/link';
 
-function Chat() {
+function ChatP() {
   const {isAuthenticated} = useContext(AuthContext);
 
   const router = useRouter()
@@ -18,9 +18,9 @@ function Chat() {
   const [allMessages,setAllMessages] = useState([])
 
   useEffect(()=>{
-    if(!isAuthenticated()){
-      router.push("/")
-    }
+    // if(!isAuthenticated()){
+    //   router.push("/")
+    // }
 
     chatCollectionReference.record(id).onSnapshot(
       (newDoc)=>{
@@ -66,4 +66,4 @@ function Chat() {
   )
 }
 
-export default Chat
+export default ChatP

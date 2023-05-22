@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { ListGroup } from 'flowbite-react'
 import SingleChat from '@/components/SingleChat'
-import ChatInput from '@/components/ChatInput'
-import MessageComp from '@/components/MessageComp'
+
 
 import Head from 'next/head'
 import { PolybaseContext } from '@/context/PolybaseProvider'
