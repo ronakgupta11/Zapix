@@ -22,7 +22,7 @@ const PostProfile = (props) => {
     // console.log("postBy",postBy)
     const [liked,setLiked] = useState(!!post?.likedBy.includes(userID,0))
     
-    const likeIcon = liked?<IoIosHeart className='h-5 w-5'/>:<IoIosHeartEmpty className='h-5 w-5'/>
+    const likeIcon = liked?<IoIosHeart className='h-5 w-5 text-red'/>:<IoIosHeartEmpty className='h-5 w-5 text-red-50'/>
 
     function handleLike(){
         if(liked){
