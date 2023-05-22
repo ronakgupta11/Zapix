@@ -47,7 +47,7 @@ function ChatP() {
     <div className='w-full  bg-white dark:bg-gray-900 p-8'>
 
     <div className='lg:w-1/2 sm:w-full m-auto border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 p-4 flex flex-col  justify-around'>
-    <div class=" fixed top-1 flex items-center space-x-4 w-full border-b dark:border-gray-600  h-16 p-4">
+    <div class=" rounded-lg flex items-center space-x-4 border-b bg-gray-100 dark:bg-gray-700 dark:border-gray-600  h-16 p-4">
         <AvatarC image = {user?.imageUrl}/>
         <div class="font-medium dark:text-white">
             <Link href={`/profile/${user?.id}`}><div>{user?.name}</div></Link>

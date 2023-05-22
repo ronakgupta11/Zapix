@@ -6,7 +6,9 @@ import { useContext } from "react";
 import { PolybaseContext } from "@/context/PolybaseProvider";
 import { AuthContext } from '@/context/AuthProvider';
 import Head from 'next/head';
-
+import ProfileCard from '@/components/ProfileCard';
+import PostProfile from '@/components/PostProfile';
+import { useRouter } from 'next/router';
 
 
 const Profile = () => {
@@ -18,9 +20,11 @@ const Profile = () => {
 
     const [uploadLink, setUploadLink] = useState("");
 
-    const {setName,setImage} = useContext(PolybaseContext);
+    const {setName,setImage,userID,userRecordRef} = useContext(PolybaseContext);
   const {isAuthenticated} = useContext(AuthContext)
-
+const [user,setUser] = useState()
+const [posts,setPosts] = useState([])
+const router = useRouter()
 
 
 
@@ -67,13 +71,13 @@ const Profile = () => {
         setIsLoading(true)
         try{
         const res = await handleUpload(file)
-        const imageLink = `${res?.protocolLink}/${file?.name}`
+        const imageLink = res?`${res?.protocolLink}/${file?.name}`:""
         
         await setName(name);
         await setImage(imageLink)
     }catch(err){
-        console.log(err)
-        setIsLoading(false)
+        alert(err)
+        // setIsLoading(false)
     }finally{
         setNameText("")
         setFile(null)
@@ -86,6 +90,21 @@ const Profile = () => {
       if(!isAuthenticated()){
         router.push("/")
     }
+    userRecordRef.onSnapshot(v =>{
+      const data = v.data
+      setPosts(data.userPosts)
+      
+      setUser(data)})
+  
+
+
+
+    })
+
+    const renderedPosts = posts?.map((p)=>{
+      return(
+        <PostProfile  userID = {userID} id = {p.id} imageUrl = {user?.imageUrl} name = {user?.name} />
+      )
     })
   return (
     <>
@@ -100,10 +119,14 @@ const Profile = () => {
       </Head>
 
 
-    <main className='w-full h-screen bg-white dark:bg-gray-900 p-8'>
+    <main className='w-full min-h-screen bg-white dark:bg-gray-900 p-8'>
 
     
-    <div className='lg:w-1/2 sm:w-full mx-auto' >
+    <div className='w-full' >
+      <ProfileCard name={user?.name} image = {user?.imageUrl} />
+      <div className='lg:w-1/2 sm:w-full mx-auto'>
+
+      
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Upload Profile Image</label>
 <input  onChange={handleFile} class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" type="file"/>
 <div class="mt-1 mb-2 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">A profile picture is useful to confirm your are logged into your account</div>
@@ -113,6 +136,11 @@ const Profile = () => {
 
 {isLoading?<SpinnerBtn className='mx-auto mt-4'/>:<Button onClick={update}> Update Profile</Button>}
 </div>
+</div>
+{/* <div className='w-full'> */}
+
+{renderedPosts}
+{/* </div> */}
         </div>
         </main>
         </>

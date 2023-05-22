@@ -5,11 +5,12 @@ import {IoIosHeartEmpty,IoIosHeart} from "react-icons/io"
 import {BsChat} from "react-icons/bs"
 import { PolybaseContext } from '@/context/PolybaseProvider'
 import { useContext } from 'react'
+import {MdDelete} from "react-icons/md"
 
 const PostProfile = (props) => {
 
     
-    const {addLike,userCollectionReference,postCollectionReference,userID} = useContext(PolybaseContext)
+    const {addLike,postCollectionReference,userID,deletePost} = useContext(PolybaseContext)
     
 
     const [post,setPost] = useState()
@@ -36,14 +37,19 @@ const PostProfile = (props) => {
             alert(err)
         }
     }
-    
+
+    async function deleteP(){
+        await deletePost(props.id)
+
+    }
+
   return (
     <div className='card lg:w-1/2 sm:w-full border border-gray-200 dark:border-borderCol rounded-lg dark:bg-primary-focus  items-center justify-center flex flex-col  m-auto mb-4'>
     {/* user info */}
     <div class="flex items-center space-x-4 w-full rounded-tl-lg rounded-tr-lg h-16 p-4 bg-light-secondary dark:bg-secondary border-b dark:border-gray-600">
     <AvatarC image = {props.imageUrl}/>
     <div class="font-medium dark:text-white">
-        <Link href={`profile/${props?.id}`}><div className='text-black dark:text-white'>{props?.name}</div></Link>
+        <Link href={`profile/${props?.userID}`}><div className='text-black dark:text-white'>{props?.name}</div></Link>
         <div class="text-sm text-gray-500 dark:text-gray-400">{post?.timeStamp}</div>
     </div>
     </div>
@@ -78,18 +84,16 @@ const PostProfile = (props) => {
 
     </div>
     {/* comments */}
-    <div className='comments w-full m-2 pl-4 pr-4'>
-        {/* <div class="relative flex w-full justify-between items-center">
-            <input type="text" id="floating_outlined" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 rounded-lg border border-gray-300 appearance-none dark:text-white bg-transparent dark:border-primary-focus dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
-            <label for="floating_outlined" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0]  px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Add Comments</label>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#2563eb" className="w-6 h-6 ml-2 -rotate-45">
-<path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-</svg>
+    <div className='comments w-full m-2 pl-4 pr-4 flex items-center justify-between'>
 
-        </div> */}
         <div className='text-sm m-1 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white'>
             <Link href={`/posts/${post?.id}`}>view all comments</Link>
         </div>
+{ (userID === props.userID)  &&  <button onClick={deletePost}>
+
+        <MdDelete className='h-8 w-8'/>
+    </button>}
+
 
     </div>
 
