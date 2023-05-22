@@ -80,7 +80,7 @@ function PostPage(props) {
 
   return (
     <div className='bg-white dark:bg-gray-900 py-8 lg:py-16 ' >
-        <section className='w-1/2 p-12 m-auto'>
+        <section className='lg:w-1/2 sm:w-full p-12 m-auto'>
         <div class="flex items-center space-x-4 w-full border-b dark:border-gray-600  h-16 p-4">
         <AvatarC image = {postBy?.imageUrl}/>
         <div class="font-medium dark:text-white">
