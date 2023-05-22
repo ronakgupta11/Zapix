@@ -89,7 +89,7 @@ const PostProfile = (props) => {
         <div className='text-sm m-1 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white'>
             <Link href={`/posts/${post?.id}`}>view all comments</Link>
         </div>
-{ (userID === props.userID)  &&  <button onClick={deletePost}>
+{ (userID === props.userID)  &&  <button onClick={deleteP}>
 
         <MdDelete className='h-8 w-8'/>
     </button>}
