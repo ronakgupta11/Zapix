@@ -60,7 +60,7 @@ const storageDeal = () => {
           cid = new CID(commP);
           const { ethereum } = window;
           if (ethereum) {
-            const provider = new ethers.BrowserProvider(ethereum);
+            const provider = new ethers.getDefaultProvider(ethereum);
             const signer = await provider.getSigner();
             dealClient = new ethers.Contract(
               contractAddress,
@@ -347,7 +347,7 @@ const storageDeal = () => {
 <div className="lg:w-1/2 sm:w-full mx-auto my-8">
     {connectWalletButton()}
 
-    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Enter CommP</label>
+    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Enter Piece ID</label>
 <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" type='text' value={commP}
             onChange={handleChangeCommP}/>
 
