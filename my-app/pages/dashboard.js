@@ -107,7 +107,10 @@ const Dashboard = () => {
 
           {allRenderedPost}
           </div>}
-          {!allPosts.length && <Placeholder/>}
+          <div className='w-full m-auto'>
+
+          {!allPosts.length && <Placeholder />}
+          </div>
           {/* <PostPage/> */}
 
         
