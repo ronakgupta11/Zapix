@@ -94,7 +94,7 @@ const Dashboard = () => {
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
 <link rel="manifest" href="/site.webmanifest"></link>
       </Head>
-      <main className=' bg-white dark:bg-primary min-h-screen p-8'>
+      <main className=' bg-white dark:bg-gray-900 min-h-screen p-8'>
           
         <div className='h-fit'>
 
