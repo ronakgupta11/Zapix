@@ -52,6 +52,9 @@ function NavbarC(props) {
     <Link href="/Chat">
       Chat
     </Link>
+    <Link href="/storageDeal">
+      storage deals
+    </Link>
   </Navbar.Collapse>}
 </Navbar>
 <div>

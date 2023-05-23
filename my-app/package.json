@@ -15,6 +15,7 @@
     "@polybase/client": "^0.5.0",
     "@spheron/browser-upload": "^1.0.1",
     "@spheron/storage": "^1.0.14",
+    "cids": "^1.1.9",
     "ethers": "^5.7.2",
     "flowbite": "^1.6.5",
     "flowbite-react": "^0.4.4",
