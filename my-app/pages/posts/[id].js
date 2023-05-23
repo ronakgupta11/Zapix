@@ -144,7 +144,7 @@ function PostPage(props) {
                 placeholder="Write a comment..." required value={commentText} onChange={handleComment}></textarea>
         </div>
         {isLoading?<SpinnerBtn/>:<button onClick={postComment} type="submit"
-            class="inline-flex btn btn-primary bg-buttonCol items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg  hover:bg-primary-800">
+            class="inline-flex btn btn- items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg  hover:bg-primary-800">
             Post comment
         </button>}
     
