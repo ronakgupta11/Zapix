@@ -60,7 +60,7 @@ const storageDeal = () => {
           cid = new CID(commP);
           const { ethereum } = window;
           if (ethereum) {
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const provider = new ethers.providers.Web3Provider(ethereum)
             const signer = await provider.getSigner();
             dealClient = new ethers.Contract(
               contractAddress,
