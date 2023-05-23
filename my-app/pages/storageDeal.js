@@ -96,7 +96,7 @@ const storageDeal = () => {
             const receipt = await transaction.wait();
             console.log(receipt);
             setProposingDeal(false);
-            setTxSubmitted("Transaction submitted! " + receipt.hash);
+            setTxSubmitted("Transaction submitted! " + receipt.transactionHash);
     
             dealClient.on("DealProposalCreate", (id, size, verified, price)=>{
               console.log(id, size, verified, price);
