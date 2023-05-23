@@ -12,7 +12,7 @@ import {
     pollRequestUntilTerminalState,
   } from '@/utils/relay';
   import { useRouter } from 'next/router';
-  const REDIRECT_URI = "http://localhost:3000/"
+  const REDIRECT_URI = "http://fvm-dataverse-hack.vercel.app/"
 export const AuthContext = createContext()
 
 export const AuthProvider=({children})=>{
